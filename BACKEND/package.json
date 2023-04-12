@@ -5,14 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "react-scripts build",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "build": "babel app.js --out-file app-compiled.js",
+    "dev": "nodemon --exec babel-node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.21.0",
     "aes256": "^1.1.0",
+    "babel-cli": "^6.26.0",
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -23,5 +26,10 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "sequelize": "^6.25.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.21.4"
   }
 }

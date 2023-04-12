@@ -1,7 +1,7 @@
 const { categorie } = require('../models');
 const firebase = require('firebase-admin');
 const db = require('../models')
-Categorie = db.categorie
+//Categorie = db.categorie
 const fs = require('fs');
 /* const config = {
     apiKey: "AIzaSyDKxiDTfOFGuT6VS8mGZKJ_PBELm_OxTiI",

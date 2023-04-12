@@ -23,12 +23,11 @@ const Editarticle = ({ art }) => {
     const handleShow = () => setShow(true);
     const [validated, setValidated] = useState(false);
     const [LibArt, setLibArt] = useState(art.LibArt);
-    const [CodeArt, setCodeArt] = useState(art.CodeArt);
+    const [CodeArt] = useState(art.CodeArt);
     const [prix1, setprix1] = useState(art.prix1);
     const [Descrip, setDescrip] = useState(art.Descrip);
     const [CodeCat, setCodeCat] = useState(art.CodeCat);
     const [files, setFiles] = useState(art.imagepath);
-    const [blob, setBlob] = useState(null);
     const dispatch = useDispatch();
     function isFile(obj) {
         return obj.constructor === File;
