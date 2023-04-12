@@ -23,7 +23,7 @@ export default class Modal extends Component {
                                 <button type="button" className="btn-close" onClick={this.props.hide}></button>
                             </div>
                             <div className="modal-body">
-                                <Card variant="outlined" sx={{ width: 320}}>
+                                <Card variant="outlined" sx={{ width: 370}}>
                                     <CardOverflow>
                                         <AspectRatio ratio="1">
                                             <img
