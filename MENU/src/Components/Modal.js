@@ -5,7 +5,7 @@ import Card from '@mui/joy/Card';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
 import Typography from '@mui/joy/Typography';
-import image from "./article3.jpg"
+import image from "./mascotte1.jpg"
 export default class Modal extends Component {
     render() {
         let modelStyle = {
@@ -23,12 +23,12 @@ export default class Modal extends Component {
                                 <button type="button" className="btn-close" onClick={this.props.hide}></button>
                             </div>
                             <div className="modal-body">
-                                <Card variant="outlined" sx={{ width: 320 }}>
+                                <Card variant="outlined" sx={{ width: 270 }}>
                                     <CardOverflow>
-                                        <AspectRatio ratio="2">
+                                        <AspectRatio ratio="1">
                                             <img
-                                                src={this.props.imagepath}
-                                                srcSet={this.props.imagepath}
+                                                src={image}
+                                                srcSet={image}
                                                 loading="lazy"
                                                 alt=""
                                             />

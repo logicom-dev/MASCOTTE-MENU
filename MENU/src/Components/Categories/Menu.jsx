@@ -5,7 +5,7 @@ import Divider from '@mui/joy/Divider';
 import AspectRatio from '@mui/joy/AspectRatio';
 import { useState } from 'react';
 import Modal from '../Modal';
-import image from '../../Components/article2.jpg'
+import image from '../../Components/mascotte2.jpg'
 const Menu = ({ items }) => {
   const [model, setModel] = useState(false);
   const [tempData, setTempdata] = useState([]);
