@@ -101,8 +101,8 @@ p {
 
 .btn-container {
   margin-top: -20px;
-  margin-bottom: 4rem;
   display: block;
+  
 
 }
 
@@ -254,4 +254,10 @@ element.style {
   flex-wrap: wrap;
   justify-content: center;
 
+}
+.display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 10px;
 }

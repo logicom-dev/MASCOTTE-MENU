@@ -7,7 +7,7 @@ import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
-import image from '../../Components/mascotte.jpg'
+import image from '../../Components/article3.jpg'
 
 const Categories = ({ categories, filterItems, activeCategory }) => {
 
@@ -47,8 +47,8 @@ const Categories = ({ categories, filterItems, activeCategory }) => {
                         return<Card sx={{ minHeight: '222px', width: 277 }}>
                       <CardCover>
                         <img
-                          src={image}
-                          srcSet={image}
+                          src={cat.Image}
+                          srcSet={cat.Image}
                           loading="lazy"
                           alt=""
                         />

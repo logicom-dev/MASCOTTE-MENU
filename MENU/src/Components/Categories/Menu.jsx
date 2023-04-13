@@ -5,7 +5,7 @@ import Divider from '@mui/joy/Divider';
 import AspectRatio from '@mui/joy/AspectRatio';
 import { useState } from 'react';
 import Modal from '../Modal';
-import image from '../../Components/mascotte2.jpg'
+import image from '../../Components/article2.jpg'
 const Menu = ({ items }) => {
   const [model, setModel] = useState(false);
   const [tempData, setTempdata] = useState([]);
@@ -36,15 +36,20 @@ const Menu = ({ items }) => {
             >
               <div style={{ "display": "flex" }}>
 
-                <AspectRatio ratio="1" sx={{ width: 100, marginLeft: 1, marginTop: 1, marginBottom:1 }}>
-                  <img
-                    border-radius='10px'
-                    radius={10}
-                    src={image}
-                    srcSet={image}
-                    loading="lazy"
-                    alt=""
-                  />
+                <AspectRatio ratio="1" sx={{ width: 100, marginLeft: 1, marginTop: 1, marginBottom: 1 }}>
+                  <picture>
+                    <source srcset={imagepath} media="(max-width: 767px)" />
+                    <source srcset={imagepath} media="(min-width: 768px) and (max-width: 1023px)" />
+                    <source srcset={imagepath} media="(min-width: 1024px)" />
+                    <img
+                      border-radius='10px'
+                      radius={10}
+                      src={imagepath}
+                      srcSet={imagepath}
+                      loading="lazy"
+                      alt=""
+                    />
+                  </picture>
                 </AspectRatio>
 
                 <div>

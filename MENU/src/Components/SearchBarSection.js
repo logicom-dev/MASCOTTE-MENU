@@ -8,7 +8,7 @@ import Divider from '@mui/joy/Divider';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Modal from './Modal';
 import MultiRangeSlider from "multi-range-slider-react";
-import image from './mascotte2.jpg'
+import image from './article2.jpg'
 
 const SearchBarSection = () => {
   const [model, setModel] = useState(false);
@@ -132,14 +132,19 @@ const SearchBarSection = () => {
               <div style={{ "display": "flex" }}>
 
                 <AspectRatio ratio="1" sx={{ width: 100, marginLeft: 1, marginTop: 1, marginBottom:1}}>
-                  <img
-
-                    border-radius='10px'
-                    src={image}
-                    srcSet={image}
-                    loading="lazy"
-                    alt=""
-                  />
+                <picture>
+                    <source srcset={product.imagepath} media="(max-width: 767px)" />
+                    <source srcset={product.imagepath} media="(min-width: 768px) and (max-width: 1023px)" />
+                    <source srcset={product.imagepath} media="(min-width: 1024px)" />
+                    <img
+                      border-radius='10px'
+                      radius={10}
+                      src={product.imagepath}
+                      srcSet={product.imagepath}
+                      loading="lazy"
+                      alt=""
+                    />
+                  </picture>
                 </AspectRatio>
 
                 <div>

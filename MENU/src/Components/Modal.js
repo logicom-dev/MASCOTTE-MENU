@@ -1,70 +1,87 @@
-import { Component } from 'react';
 import * as React from 'react';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Card from '@mui/joy/Card';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
 import Typography from '@mui/joy/Typography';
-import image from "./mascotte1.jpg"
-export default class Modal extends Component {
-    render() {
-        let modelStyle = {
-            display: 'block',
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            
-        }
-        return (
-            <section>
-                <div className="modal show fade" style={modelStyle} >
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">{this.props.LibArt}</h5>
-                                <button type="button" className="btn-close" onClick={this.props.hide}></button>
-                            </div>
-                            <div className="modal-body">
-                                <Card variant="outlined" sx={{ width: 370}}>
-                                    <CardOverflow>
-                                        <AspectRatio ratio="1">
+import image from "./article2.jpg";
+import { useNavigate } from "react-router-dom";
+import { addToCart } from "../features/cartSlice";
+export default function Modal(props) {
+    let navigate = useNavigate();
+    let modelStyle = {
+        display: 'block',
+        backgroundColor: 'rgba(0,0,0,0.8)',
+
+    }
+    const handleAddToCart = (product) => {
+        addToCart(product);
+        navigate("/cart");
+        console.log(product);
+    };
+
+    return (
+        <section>
+            <div className="modal show fade" style={modelStyle} >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">{props.LibArt}</h5>
+                            <button type="button" className="btn-close" onClick={props.hide}></button>
+                        </div>
+                        <div className="modal-body">
+                            <Card variant="outlined" sx={{ width: 350 }}>
+                                <CardOverflow>
+                                    <AspectRatio ratio="1">
+                                        <picture>
+                                            <source srcset={props.imagepath} media="(max-width: 767px)" />
+                                            <source srcset={props.imagepath} media="(min-width: 768px) and (max-width: 1023px)" />
+                                            <source srcset={props.imagepath} media="(min-width: 1024px)" />
                                             <img
-                                                src={image}
-                                                srcSet={image}
+                                                src={props.imagepath}
+                                                srcSet={props.imagepath}
                                                 loading="lazy"
                                                 alt=""
                                             />
-                                        </AspectRatio>
+                                        </picture>
 
-                                    </CardOverflow>
-                                    <Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
-                                        <p>{this.props.Descrip}</p>
+                                    </AspectRatio>
+
+                                </CardOverflow>
+                                <Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
+                                    <p>{props.Descrip}</p>
+                                </Typography>
+                                <Divider inset="context" />
+                                <CardOverflow
+                                    variant="soft"
+                                    sx={{
+                                        display: 'flex',
+                                        gap: 1,
+                                        py: 0.5,
+                                        px: 'var(--Card-padding)',
+                                        bgcolor: 'background.level1',
+                                    }}
+                                >
+                                    <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
+                                        Prix : {props.prix1} Dt
                                     </Typography>
-                                    <Divider inset="context" />
-                                    <CardOverflow
-                                        variant="soft"
-                                        sx={{
-                                            display: 'flex',
-                                            gap: 1.5,
-                                            py: 1.5,
-                                            px: 'var(--Card-padding)',
-                                            bgcolor: 'background.level1',
-                                        }}
-                                    >
-                                        <Typography level="body3" sx={{ fontWeight: 'md', color: 'text.secondary' }}>
-                                        Prix : {this.props.prix1} Dt
-                                        </Typography>
-                                    </CardOverflow>
 
-                                </Card>
+                                </CardOverflow>
+
+                            </Card>
 
 
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-primary">Ajouter au panier</button>
-                            </div>
+                        </div>
+                        <div className="modal-footer">
+
                         </div>
                     </div>
                 </div>
-            </section>
-        )
-    }
+            </div>
+        </section>
+    )
+
 }
+{/* <button className="btn btn-primary" onClick={() => handleAddToCart(props)}>
+                                    Add To Cart
+                                </button> */}

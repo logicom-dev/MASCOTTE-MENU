@@ -8,6 +8,7 @@ import Categories from './Categories';
 import Menu from './Menu';
 
 import logo from "./MascotteLogo.png";
+import SearchBarSection from '../SearchBarSection';
 
 
 
@@ -88,6 +89,7 @@ const Categorie = () => {
           filterItems={filterItems}
         />
         <Menu items={menuItems} />
+        <SearchBarSection/>
         
  
        
