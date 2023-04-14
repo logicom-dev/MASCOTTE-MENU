@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export default axios.create({
-    baseURL:"https://mascotte-api.onrender.com/api" 
+    baseURL:"http://localhost:3003/api" 
 })
-//"http://localhost:3000/api" 
+// https://mascotte-api.onrender.com/api

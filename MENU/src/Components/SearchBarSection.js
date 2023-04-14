@@ -13,8 +13,8 @@ import image from './article2.jpg'
 const SearchBarSection = () => {
   const [model, setModel] = useState(false);
   const [tempData, setTempdata] = useState([]);
-  const getData = (prix1, LibArt, Descrip, imagepath) => {
-    let tempData = [prix1, LibArt, Descrip, imagepath];
+  const getData = (prix1, LibArt, Descrip, image_web ) => {
+    let tempData = [prix1, LibArt, Descrip, image_web ];
     setTempdata(item => [1, ...tempData]);
     console.warn(tempData);
     return setModel(true);
@@ -133,14 +133,14 @@ const SearchBarSection = () => {
 
                 <AspectRatio ratio="1" sx={{ width: 100, marginLeft: 1, marginTop: 1, marginBottom:1}}>
                 <picture>
-                    <source srcset={product.imagepath} media="(max-width: 767px)" />
-                    <source srcset={product.imagepath} media="(min-width: 768px) and (max-width: 1023px)" />
-                    <source srcset={product.imagepath} media="(min-width: 1024px)" />
+                    <source srcset={product.image_web} media="(max-width: 767px)" />
+                    <source srcset={product.image_web} media="(min-width: 768px) and (max-width: 1023px)" />
+                    <source srcset={product.image_web} media="(min-width: 1024px)" />
                     <img
                       border-radius='10px'
                       radius={10}
-                      src={product.imagepath}
-                      srcSet={product.imagepath}
+                      src={product.image_web}
+                      srcSet={product.image_web}
                       loading="lazy"
                       alt=""
                     />
@@ -159,7 +159,7 @@ const SearchBarSection = () => {
                     variant="outlined">
                     {product.prix1} dt
                   </Typography>
-                  <button className="btn btn-primary" onClick={() => getData(product.prix1, product.LibArt, product.Descrip, product.imagepath)}>
+                  <button className="btn btn-primary" onClick={() => getData(product.prix1, product.LibArt, product.Descrip, product.image_web )}>
                     Details
                   </button>
 
@@ -176,7 +176,7 @@ const SearchBarSection = () => {
         ))}
       </div>
       {
-        model === true ? <Modal prix1={tempData[1]} LibArt={tempData[2]} Descrip={tempData[3]} imagepath={tempData[4]} hide={() => setModel(false)} /> : ''
+        model === true ? <Modal prix1={tempData[1]} LibArt={tempData[2]} Descrip={tempData[3]} image_web ={tempData[4]} hide={() => setModel(false)} /> : ''
       }
     </div>
   );

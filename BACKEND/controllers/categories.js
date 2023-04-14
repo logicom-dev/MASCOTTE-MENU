@@ -1,7 +1,7 @@
-const { categorie } = require('../models');
-const firebase = require('firebase-admin');
+//const { categorie } = require('../models');
+//const firebase = require('firebase-admin');
 const db = require('../models')
-Categorie = db.categorie
+//Categorie = db.categorie
 const fs = require('fs');
 /* const config = {
     apiKey: "AIzaSyDKxiDTfOFGuT6VS8mGZKJ_PBELm_OxTiI",
@@ -32,7 +32,7 @@ const path =require('path')
 
 const getCategories = async (req, res) => {
     try {
-        const cat = await db.sequelize.query(`select CodeCat, DesCat, visible_web, Image from mascotte.categorie where visible_web = "1"`);
+        const cat = await db.sequelize.query(`select CodeCat, DesCat, visible_web, Image from categorie where visible_web = "1"`);
       
         res.status(200).json(cat[0]);
     } catch (error) {
@@ -45,7 +45,7 @@ const getCategories = async (req, res) => {
 const GetCategorieById = async (req, res) => {
     const CodeCat = req.params.CodeCat;
     try {
-        const cat = await db.sequelize.query(`SELECT DesCat, CodeCat, Image FROM mascotte.categorie WHERE CodeCat=${CodeCat}`);
+        const cat = await db.sequelize.query(`SELECT DesCat, CodeCat, Image FROM categorie WHERE CodeCat=${CodeCat}`);
         console.log(cat);
         res.status(200).json(cat[0]);
     } catch (error) {
@@ -58,7 +58,7 @@ const deleteCategorie2 = async (req, res) => {
     console.log(CodeCat);
     try {
 
-        const cat = await db.sequelize.query(`DELETE FROM mascotte.categorie WHERE  CodeCat = "${CodeCat}"`);
+        const cat = await db.sequelize.query(`DELETE FROM categorie WHERE  CodeCat = "${CodeCat}"`);
         console.log(cat)
         res.json({ message: "category deleted successfully." });;
     } catch (error) {
@@ -75,7 +75,7 @@ const createCategorie = async (req, res) => {
 
     try {
 
-        const cat = await db.sequelize.query(`INSERT INTO mascotte.categorie (DesCat, CodeCat, Image) VALUES ("${DesCat}","${CodeCat}","${Image}")`);
+        const cat = await db.sequelize.query(`INSERT INTO categorie (DesCat, CodeCat, Image) VALUES ("${DesCat}","${CodeCat}","${Image}")`);
         console.log(cat);
         console.log("category added successfully !!");
         res.status(200).json(cat[0]);
@@ -99,7 +99,7 @@ const updateCategorie = async (req, res) => {
        }); */
     try {
 
-        const cat = await db.sequelize.query(`UPDATE mascotte.categorie SET DesCat = "${DesCat}", CodeCat = "${CodeCat}", Image ="${Image}"  WHERE  CodeCat = "${CodeCat}"`);
+        const cat = await db.sequelize.query(`UPDATE categorie SET DesCat = "${DesCat}", CodeCat = "${CodeCat}", Image ="${Image}"  WHERE  CodeCat = "${CodeCat}"`);
         console.log(cat)
         res.json({ message: "category updated successfully!" });
     } catch (error) {
@@ -112,7 +112,7 @@ const deleteCategorie = async (req, res) => {
     const CodeCat = req.params.CodeCat;
     try {
 
-        const cat = await db.sequelize.query(`UPDATE mascotte.categorie SET visible_web ="0" WHERE  CodeCat = "${CodeCat}"`);
+        const cat = await db.sequelize.query(`UPDATE categorie SET visible_web ="0" WHERE  CodeCat = "${CodeCat}"`);
         console.log(cat)
         res.json({ message: "category deleted successfully!" });
     } catch (error) {

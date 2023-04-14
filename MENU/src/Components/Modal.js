@@ -34,12 +34,12 @@ export default function Modal(props) {
                                 <CardOverflow>
                                     <AspectRatio ratio="1">
                                         <picture>
-                                            <source srcset={props.imagepath} media="(max-width: 767px)" />
-                                            <source srcset={props.imagepath} media="(min-width: 768px) and (max-width: 1023px)" />
-                                            <source srcset={props.imagepath} media="(min-width: 1024px)" />
+                                            <source srcset={props.image_web} media="(max-width: 767px)" />
+                                            <source srcset={props.image_web} media="(min-width: 768px) and (max-width: 1023px)" />
+                                            <source srcset={props.image_web} media="(min-width: 1024px)" />
                                             <img
-                                                src={props.imagepath}
-                                                srcSet={props.imagepath}
+                                                src={props.image_web}
+                                                srcSet={props.image_web}
                                                 loading="lazy"
                                                 alt=""
                                             />

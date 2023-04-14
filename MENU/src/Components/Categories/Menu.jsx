@@ -9,8 +9,8 @@ import image from '../../Components/article2.jpg'
 const Menu = ({ items }) => {
   const [model, setModel] = useState(false);
   const [tempData, setTempdata] = useState([]);
-  const getData = (prix1, LibArt, Descrip, imagepath) => {
-    let tempData = [prix1, LibArt, Descrip, imagepath];
+  const getData = (prix1, LibArt, Descrip, image_web ) => {
+    let tempData = [prix1, LibArt, Descrip, image_web ];
     setTempdata(item => [1, ...tempData]);
     console.warn(tempData);
     return setModel(true);
@@ -19,7 +19,7 @@ const Menu = ({ items }) => {
   return (
     <div className="display">
       {items.map((item) => {
-        const { CodeArt, LibArt, imagepath, prix1, Descrip } = item;
+        const { CodeArt, LibArt, prix1, Descrip, image_web } = item;
 
         return (
 
@@ -38,14 +38,14 @@ const Menu = ({ items }) => {
 
                 <AspectRatio ratio="1" sx={{ width: 100, marginLeft: 1, marginTop: 1, marginBottom: 1 }}>
                   <picture>
-                    <source srcset={imagepath} media="(max-width: 767px)" />
-                    <source srcset={imagepath} media="(min-width: 768px) and (max-width: 1023px)" />
-                    <source srcset={imagepath} media="(min-width: 1024px)" />
+                    <source srcset={image_web} media="(max-width: 767px)" />
+                    <source srcset={image_web } media="(min-width: 768px) and (max-width: 1023px)" />
+                    <source srcset={image_web } media="(min-width: 1024px)" />
                     <img
                       border-radius='10px'
                       radius={10}
-                      src={imagepath}
-                      srcSet={imagepath}
+                      src={image_web}
+                      srcSet={image_web}
                       loading="lazy"
                       alt=""
                     />
@@ -64,7 +64,7 @@ const Menu = ({ items }) => {
                     variant="outlined">
                     {prix1} dt
                   </Typography>
-                  <button className="btn btn-primary" onClick={() => getData(prix1, LibArt, Descrip, imagepath)}>
+                  <button className="btn btn-primary" onClick={() => getData(prix1, LibArt, Descrip, image_web)}>
                     Details
                   </button>
 
@@ -77,7 +77,7 @@ const Menu = ({ items }) => {
         );
       })}
       {
-        model === true ? <Modal prix1={tempData[1]} LibArt={tempData[2]} Descrip={tempData[3]} imagepath={tempData[4]} hide={() => setModel(false)} /> : ''
+        model === true ? <Modal prix1={tempData[1]} LibArt={tempData[2]} Descrip={tempData[3]} image_web ={tempData[4]} hide={() => setModel(false)} /> : ''
       }
     </div>
   );
