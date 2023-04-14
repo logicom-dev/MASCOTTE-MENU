@@ -1,19 +1,23 @@
 "use strict";
 
-var express = require('express');
-var app = express();
-var cors = require('cors');
+var _express = _interopRequireDefault(require("express"));
+var _cors = _interopRequireDefault(require("cors"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+//const express = require('express');
+var app = (0, _express["default"])();
+//const cors = require('cors');
+
 var articleRouter = require("./routes/articles.route");
 var categorieRouter = require("./routes/categories.route");
 var db = require('./models');
-app.use(express.json());
-app.use(cors());
+app.use(_express["default"].json());
+app.use((0, _cors["default"])());
 app.use('/api/articles', articleRouter);
 app.use('/api/categorie', categorieRouter);
 
 //static images folder
 
-app.use('/public', express["static"]('public'));
+app.use('/public', _express["default"]["static"]('public'));
 
 //app.use('/public2', express.static('public2'));
 

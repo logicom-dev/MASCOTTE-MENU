@@ -2,10 +2,9 @@
   "name": "gestrestaurant",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
+
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
     "build": "babel app.js --out-file app-compiled.js",
     "dev": "nodemon --exec babel-node app.js"
   },
@@ -14,8 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.21.4",
+    "babel-plugin-module-resolver": "5.0.0",
     "aes256": "^1.1.0",
-    "babel-cli": "^6.26.0",
     "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -33,3 +35,5 @@
     "@babel/preset-env": "^7.21.4"
   }
 }
+
+
