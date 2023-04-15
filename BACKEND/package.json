@@ -2,11 +2,15 @@
   "name": "gestrestaurant",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "build": "babel app.js --out-file app-compiled.js",
-    "dev": "nodemon --exec babel-node app.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "react-scripts build",
+    
+    "start": "node app.js"
+
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
