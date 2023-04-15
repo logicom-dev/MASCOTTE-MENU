@@ -38,12 +38,12 @@ const AfficheArticles = () => {
             name: "CodeCat"
         },
         {
-            label: "imagepath",
-            name: "imagepath",
+            label: "image_web",
+            name: "image_web",
             options: {
-                customBodyRender: (imagepath) => (
+                customBodyRender: (image_web) => (
                     <img
-                        src={`${imagepath}`} width={100} height={100}
+                        src={`${image_web}`} width={100} height={100}
                         alt="" />
                 )
             }

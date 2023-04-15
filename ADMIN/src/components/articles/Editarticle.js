@@ -27,7 +27,7 @@ const Editarticle = ({ art }) => {
     const [prix1, setprix1] = useState(art.prix1);
     const [Descrip, setDescrip] = useState(art.Descrip);
     const [CodeCat, setCodeCat] = useState(art.CodeCat);
-    const [files, setFiles] = useState(art.imagepath);
+    const [files, setFiles] = useState(art.image_web);
     const dispatch = useDispatch();
     function isFile(obj) {
         return obj.constructor === File;

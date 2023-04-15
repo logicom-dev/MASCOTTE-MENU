@@ -5,7 +5,7 @@ const Article = db.article;
 
 const getArticles = async (req, res) => {
     try {
-        const art = await db.sequelize.query(`select CodeArt, LibArt, Descrip, CodeCat, prix1, imagepath, image_web from article WHERE  visible_web = "1"`);
+        const art = await db.sequelize.query(`select CodeArt, LibArt, Descrip, CodeCat, prix1, image_web from article WHERE  visible_web = "1"`);
 
         res.status(200).json(art[0]);
     } catch (error) {
@@ -38,7 +38,7 @@ const createArticle = async (req, res) => {
 
     try {
 
-        const art = await db.sequelize.query(`INSERT INTO article (CodeCat, Descrip, LibArt, prix1, CodeArt, imagepath, image_web) VALUES ("${CodeCat}","${Descrip}","${LibArt}","${prix1}","${CodeArt}","${imagepath}","${imagepath}")`);
+        const art = await db.sequelize.query(`INSERT INTO article (CodeCat, Descrip, LibArt, prix1, CodeArt, image_web) VALUES ("${CodeCat}","${Descrip}","${LibArt}","${prix1}","${CodeArt}","${imagepath}")`);
         console.log(art);
         console.log("article added successfully !!");
         res.status(200).json(art);
@@ -59,7 +59,7 @@ const updateArticle = async (req, res) => {
 
     try {
 
-        const cat = await db.sequelize.query(`UPDATE article SET Descrip ="${Descrip}", LibArt = "${LibArt}", prix1 ="${prix1}", CodeCat = "${CodeCat}", imagepath = "${imagepath}", image_web = "${imagepath}" WHERE  CodeArt = "${CodeArt}"`);
+        const cat = await db.sequelize.query(`UPDATE article SET Descrip ="${Descrip}", LibArt = "${LibArt}", prix1 ="${prix1}", CodeCat = "${CodeCat}", image_web = "${imagepath}" WHERE  CodeArt = "${CodeArt}"`);
         console.log(cat)
         res.json({ message: "article updated successfully!" });
     } catch (error) {
