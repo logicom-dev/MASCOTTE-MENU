@@ -7,15 +7,17 @@ import Typography from '@mui/joy/Typography';
 import image from "./article2.jpg";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../features/cartSlice";
+import { useDispatch } from 'react-redux';
 export default function Modal(props) {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
     let modelStyle = {
         display: 'block',
         backgroundColor: 'rgba(0,0,0,0.8)',
 
     }
     const handleAddToCart = (product) => {
-        addToCart(product);
+        dispatch(addToCart(product));
         navigate("/cart");
         console.log(product);
     };
@@ -67,6 +69,9 @@ export default function Modal(props) {
                                     </Typography>
 
                                 </CardOverflow>
+                                <button className="btn btn-primary" onClick={() => handleAddToCart(props)}>
+                                    Add To Cart
+                                </button>
 
                             </Card>
 

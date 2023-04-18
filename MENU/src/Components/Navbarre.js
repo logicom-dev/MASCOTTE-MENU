@@ -5,20 +5,32 @@ import Navbar from 'react-bootstrap/Navbar';
 import Button from '@mui/material/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from "react-router-dom"
+import IconButton from '@mui/material/IconButton';
+import { useNavigate } from "react-router-dom";
+import Badge from '@mui/material/Badge';
+import { useSelector } from "react-redux";
+
 export default function Navbarre() {
+  const navigate = useNavigate();
+  const {cartTotalQuantity} = useSelector((state) => state.cart);
   return (
     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand href="/">La Mascotte</Navbar.Brand>
-       {/*  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/Articlesearch" >Recherche par Article</Nav.Link>
             <Nav.Link as={Link} to="/Categoriesearch" >Recherche par Categorie</Nav.Link>
           </Nav>
           <Button color="inherit"><Link to="/cart" style={{ "color": "yellow", "textDecoration": "none", borderRadius: '50%', fontSize: 26 }}>
-            <ShoppingCartIcon sx={{ fontSize: 40 }} /></Link></Button>
-        </Navbar.Collapse> */}
+            <ShoppingCartIcon sx={{ fontSize: 40 }} /></Link>
+            <Badge badgeContent={cartTotalQuantity > 0 ? cartTotalQuantity : 0}
+              color="success">
+            </Badge>
+            </Button>
+        
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   )

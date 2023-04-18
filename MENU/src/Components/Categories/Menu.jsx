@@ -9,8 +9,8 @@ import image from '../../Components/article2.jpg'
 const Menu = ({ items }) => {
   const [model, setModel] = useState(false);
   const [tempData, setTempdata] = useState([]);
-  const getData = (prix1, LibArt, Descrip, image_web ) => {
-    let tempData = [prix1, LibArt, Descrip, image_web ];
+  const getData = (prix1, LibArt, Descrip, image_web, CodeArt ) => {
+    let tempData = [prix1, LibArt, Descrip, image_web, CodeArt ];
     setTempdata(item => [1, ...tempData]);
     console.warn(tempData);
     return setModel(true);
@@ -19,7 +19,7 @@ const Menu = ({ items }) => {
   return (
     <div className="display">
       {items.map((item) => {
-        const { CodeArt, LibArt, prix1, Descrip, image_web } = item;
+        const { CodeArt, LibArt, prix1, Descrip, image_web} = item;
 
         return (
 
@@ -64,7 +64,7 @@ const Menu = ({ items }) => {
                     variant="outlined">
                     {prix1} dt
                   </Typography>
-                  <button className="btn btn-primary" onClick={() => getData(prix1, LibArt, Descrip, image_web)}>
+                  <button className="btn btn-primary" onClick={() => getData(prix1, LibArt, Descrip, image_web, CodeArt)}>
                     Details
                   </button>
 
@@ -77,7 +77,7 @@ const Menu = ({ items }) => {
         );
       })}
       {
-        model === true ? <Modal prix1={tempData[1]} LibArt={tempData[2]} Descrip={tempData[3]} image_web ={tempData[4]} hide={() => setModel(false)} /> : ''
+        model === true ? <Modal prix1={tempData[1]} LibArt={tempData[2]} Descrip={tempData[3]} image_web ={tempData[4]} CodeArt= {tempData[5]} hide={() => setModel(false)} /> : ''
       }
     </div>
   );
