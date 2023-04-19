@@ -69,9 +69,7 @@ const deleteCategorie2 = async (req, res) => {
 const createCategorie = async (req, res) => {
     const CodeCat = req.body.codecategorie;
     const DesCat = req.body.nomcategorie;
-    //const Image = req.file.filename;
-    const url = req.protocol + '://' + req.get('host')
-    const Image = url + '/public/' + req.file.filename;
+    const Image = req.body.Image;
 
     try {
 
