@@ -85,9 +85,10 @@ const createCategorie = async (req, res) => {
 const updateCategorie = async (req, res) => {
     const CodeCat = req.body.CodeCat;
     const DesCat = req.body.DesCat;
-    const url = req.protocol + '://' + req.get('host')
+    const Image = req.body.Image;
+    /* const url = req.protocol + '://' + req.get('host')
     const Image = url + '/public/' + req.file.filename;
-    const path = Image;
+    const path = Image; */
     /*  fs.access(path, fs.constants.F_OK, (err) => {
          if (err) {
            console.error(`${path} does not exist or is not accessible`);

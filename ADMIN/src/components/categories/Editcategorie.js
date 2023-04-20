@@ -3,8 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
+import  storage from "../../firebaseConfig";
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { useDispatch } from "react-redux";
+import { UploadFirebase } from '../../Utils/UploadFirebase';
 import { updateCategorie, getCategories } from '../../features/categorieSlice';
 import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
@@ -15,14 +17,53 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 const Editcategorie = ({ cat }) => {
+    function getFileFromUrl(url) {
+        fetch(url)
+          .then(response => response.blob())
+          .then(blob => {
+            // process the file content as needed
+            console.log(blob);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+    console.log(cat.Image)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [validated, setValidated] = useState(false);
     const [CodeCat] = useState(cat.CodeCat);
     const [DesCat, setDesCat] = useState(cat.DesCat);
-    const [files, setFiles] = useState(cat.Image);
+    const [files, setFiles] = useState(getFileFromUrl(cat.Image));
     const dispatch = useDispatch();
+
+    const handleUpload = (event) => {
+        if (!files[0].file) {
+            alert("Please upload an image first!");
+        }
+        console.log(files[0].file)
+        resultHandleUpload(files[0].file, event);
+
+    };
+
+    const resultHandleUpload = async (image, event) => {
+
+
+        try {
+
+            await UploadFirebase(image).then((url) => {
+                console.log(url);
+
+                handleSubmit(event, url);
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+      
     function isFile(obj) {
         return obj.constructor === File;
     }
@@ -38,7 +79,7 @@ const Editcategorie = ({ cat }) => {
 
         return file;
     }
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event, url) => {
         event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === true) {
@@ -46,7 +87,7 @@ const Editcategorie = ({ cat }) => {
 
                 CodeCat: CodeCat,
                 DesCat: DesCat,
-                Image: files[0].file
+                Image: url
 
             }
             console.log(categorie.Image);
@@ -129,6 +170,7 @@ One</span>'
                         <Button variant="secondary" onClick={handleClose}>
                             Fermer
                         </Button>
+                        <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>modifier</Button>
                         <Button type="submit">Enregistrer</Button>
                     </Modal.Footer>
                 </Form>

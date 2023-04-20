@@ -1,5 +1,6 @@
 import React from 'react'
-import {Nav, Navbar,Container,Form,FormControl,Button} from 'react-bootstrap';
+import {Nav, Navbar,Container,Form} from 'react-bootstrap';
+//FormControl,Button
 import {Link } from 'react-router-dom'
 const Menu=()=>{
 return(
@@ -12,13 +13,13 @@ return(
 </Nav>
 </Container>
 <Form className="d-flex">
-<FormControl
+{/* <FormControl
 type="search"
 placeholder="Search"
 className="me-2"
 aria-label="Search"
 />
-<Button variant="success">Chercher</Button>
+<Button variant="success">Chercher</Button> */}
 </Form>
 </Navbar>
 )
