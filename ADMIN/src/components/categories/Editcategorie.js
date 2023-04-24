@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
+import  storage from "../../firebaseConfig";
+import { ref} from "firebase/storage";
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { useDispatch } from "react-redux";
 import { updateCategorie, getCategories } from '../../features/categorieSlice';
@@ -16,7 +18,8 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 const Editcategorie = ({ cat }) => {
-    console.log(cat.Image)
+
+   
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -25,8 +28,10 @@ const Editcategorie = ({ cat }) => {
     const [DesCat, setDesCat] = useState(cat.DesCat);
     const [files, setFiles] = useState(cat.Image);
     const [Image, setImage] = useState("");
+
+
     const dispatch = useDispatch();
-    function isFile(obj) {
+    /* function isFile(obj) {
         return obj.constructor === File;
     }
     function blobToFile(blob, fileName) {
@@ -40,7 +45,7 @@ const Editcategorie = ({ cat }) => {
         const file = formData.get('file');
 
         return file;
-    }
+    } */
     const handleUpload = (event) => {
         if (!files[0].file) {
             alert("Please upload an image first!");
@@ -78,7 +83,7 @@ const Editcategorie = ({ cat }) => {
             }
             console.log(categorie.Image);
 
-            if (isFile(categorie.Image)) {
+          /*   if (isFile(categorie.Image)) {
                 console.log('It is a File no need to change')
                 console.log(files[0].file.name)
             }
@@ -87,13 +92,13 @@ const Editcategorie = ({ cat }) => {
                 categorie.Image = blobToFile(files[0].file, files[0].file.name);
             }
 
-
+ */
             console.log(categorie.Image);
             const formData = new FormData();
             buildFormData(formData, categorie);
-            await dispatch(updateCategorie(formData))
+            dispatch(updateCategorie(formData))
 
-            dispatch(getCategories());
+          await  dispatch(getCategories());
         
         setValidated(true);
 
