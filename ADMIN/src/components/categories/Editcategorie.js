@@ -3,13 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
-import  storage from "../../firebaseConfig";
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { useDispatch } from "react-redux";
-import { UploadFirebase } from '../../Utils/UploadFirebase';
 import { updateCategorie, getCategories } from '../../features/categorieSlice';
 import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
+import { UploadFirebase } from '../../Utils/UploadFirebase';
 import { buildFormData } from "../../Utils/ConvertFormData";
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
@@ -17,17 +16,6 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 const Editcategorie = ({ cat }) => {
-    function getFileFromUrl(url) {
-        fetch(url)
-          .then(response => response.blob())
-          .then(blob => {
-            // process the file content as needed
-            console.log(blob);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }
     console.log(cat.Image)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -35,9 +23,24 @@ const Editcategorie = ({ cat }) => {
     const [validated, setValidated] = useState(false);
     const [CodeCat] = useState(cat.CodeCat);
     const [DesCat, setDesCat] = useState(cat.DesCat);
-    const [files, setFiles] = useState(getFileFromUrl(cat.Image));
+    const [files, setFiles] = useState(cat.Image);
+    const [Image, setImage] = useState("");
     const dispatch = useDispatch();
+    function isFile(obj) {
+        return obj.constructor === File;
+    }
+    function blobToFile(blob, fileName) {
+        // Create a new FormData object
+        const formData = new FormData();
 
+        // Append the Blob object to the FormData object with the specified file name
+        formData.append('file', blob, fileName);
+
+        // Extract the File object from the FormData object
+        const file = formData.get('file');
+
+        return file;
+    }
     const handleUpload = (event) => {
         if (!files[0].file) {
             alert("Please upload an image first!");
@@ -63,26 +66,9 @@ const Editcategorie = ({ cat }) => {
         }
 
     }
-      
-    function isFile(obj) {
-        return obj.constructor === File;
-    }
-    function blobToFile(blob, fileName) {
-        // Create a new FormData object
-        const formData = new FormData();
-
-        // Append the Blob object to the FormData object with the specified file name
-        formData.append('file', blob, fileName);
-
-        // Extract the File object from the FormData object
-        const file = formData.get('file');
-
-        return file;
-    }
     const handleSubmit = async (event, url) => {
         event.preventDefault();
-        const form = event.currentTarget;
-        if (form.checkValidity() === true) {
+        setImage(url);
             const categorie = {
 
                 CodeCat: CodeCat,
@@ -108,7 +94,7 @@ const Editcategorie = ({ cat }) => {
             await dispatch(updateCategorie(formData))
 
             dispatch(getCategories());
-        }
+        
         setValidated(true);
 
 
@@ -170,8 +156,8 @@ One</span>'
                         <Button variant="secondary" onClick={handleClose}>
                             Fermer
                         </Button>
-                        <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>modifier</Button>
-                        <Button type="submit">Enregistrer</Button>
+                        <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Modifier</Button>
+
                     </Modal.Footer>
                 </Form>
             </Modal>
