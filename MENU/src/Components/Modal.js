@@ -70,7 +70,7 @@ export default function Modal(props) {
 
                                 </CardOverflow>
                                 <button className="btn btn-primary" onClick={() => handleAddToCart(props)}>
-                                    Add To Cart
+                                    Ajouter au panier
                                 </button>
 
                             </Card>
