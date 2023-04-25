@@ -33,7 +33,7 @@ const Cart = () => {
   //const urlimage=process.env.REACT_APP_ADRESSE+"public/";
   return (
     <div className="cart-container">
-      <h2>Shopping Cart</h2>
+      <h2>Panier</h2>
       {cart.cartItems.length === 0 ? (
         <div className="cart-empty">
           <p>Your cart is currently empty</p>
@@ -59,9 +59,9 @@ const Cart = () => {
       ) : (
         <div>
           <div className="titles">
-            <h3 className="product-title">Product</h3>
-            <h3 className="price">Price</h3>
-            <h3 className="quantity">Quantity</h3>
+            <h3 className="product-title">Produit</h3>
+            <h3 className="price">Prix</h3>
+            <h3 className="quantity">Quantité</h3>
             <h3 className="total">Total</h3>
           </div>
           <div className="cart-items">
@@ -73,7 +73,7 @@ const Cart = () => {
                       <h3>{cartItem.LibArt}</h3>
                       <p>{cartItem.CodeArt}</p>
                       <button onClick={() => handleRemoveFromCart(cartItem)}>
-                        Remove
+                      Supprimer
                       </button>
                     </div>
                   </div>
@@ -83,7 +83,7 @@ const Cart = () => {
                       -
                     </button>
                     <div className="count">{cartItem.cartQuantity}</div>
-                    <button onClick={() => handleAddToCart(cartItem)}>+</button>
+                    <button onClick={() => handleAddToCart(cartItem)}> + </button>
                   </div>
                   <div className="cart-product-total-price">
                     {cartItem.prix1 * cartItem.cartQuantity} TND
@@ -93,15 +93,15 @@ const Cart = () => {
           </div>
           <div className="cart-summary">
             <button className="clear-btn" onClick={() => handleClearCart()}>
-              Clear Cart
+              Clear 
             </button>
             <div className="cart-checkout">
               <div className="subtotal">
-                <span>Subtotal</span>
+                <span>Total</span>
                 <span className="amount">{cart.cartTotalAmount} TND</span>
               </div>
-              <p>Taxes and shipping calculated at checkout</p>
-              <button><Link to="/ckeckout" style={{"color":"yellow"}}>Check out</Link></button>
+              {/* <p>Taxes and shipping calculated at checkout</p>
+              <button><Link to="/ckeckout" style={{"color":"yellow"}}>Check out</Link></button> */}
               <div className="continue-shopping">
                 <Link to="/">
                   <svg
@@ -117,7 +117,7 @@ const Cart = () => {
                       d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
                     />
                   </svg>
-                  <span>Continue Shopping</span>
+                  <span>Ajouter autres articles</span>
                 </Link>
               </div>
             </div>

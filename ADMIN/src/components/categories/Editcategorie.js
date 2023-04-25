@@ -3,8 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
-import  storage from "../../firebaseConfig";
-import { ref} from "firebase/storage";
+import storage from "../../firebaseConfig";
+import { ref } from "firebase/storage";
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { useDispatch } from "react-redux";
 import { updateCategorie, getCategories } from '../../features/categorieSlice';
@@ -19,15 +19,22 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 const Editcategorie = ({ cat }) => {
 
-   
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [validated, setValidated] = useState(false);
     const [CodeCat] = useState(cat.CodeCat);
     const [DesCat, setDesCat] = useState(cat.DesCat);
-    const [files, setFiles] = useState(cat.Image);
+    const [files, setFiles] = useState([
+        {
+            source: cat.Image.toString(),
+
+        },
+    ]);
     const [Image, setImage] = useState("");
+
+    
+
 
 
     const dispatch = useDispatch();
@@ -74,32 +81,32 @@ const Editcategorie = ({ cat }) => {
     const handleSubmit = async (event, url) => {
         event.preventDefault();
         setImage(url);
-            const categorie = {
+        const categorie = {
 
-                CodeCat: CodeCat,
-                DesCat: DesCat,
-                Image: url
+            CodeCat: CodeCat,
+            DesCat: DesCat,
+            Image: url
 
-            }
-            console.log(categorie.Image);
+        }
+        console.log(categorie.Image);
 
-          /*   if (isFile(categorie.Image)) {
-                console.log('It is a File no need to change')
-                console.log(files[0].file.name)
-            }
-            else {
-                console.log('It is a Blob, change it to a File')
-                categorie.Image = blobToFile(files[0].file, files[0].file.name);
-            }
+        /*   if (isFile(categorie.Image)) {
+              console.log('It is a File no need to change')
+              console.log(files[0].file.name)
+          }
+          else {
+              console.log('It is a Blob, change it to a File')
+              categorie.Image = blobToFile(files[0].file, files[0].file.name);
+          }
 
- */
-            console.log(categorie.Image);
-            const formData = new FormData();
-            buildFormData(formData, categorie);
-            dispatch(updateCategorie(formData))
+*/
+        console.log(categorie.Image);
+        const formData = new FormData();
+        buildFormData(formData, categorie);
+        dispatch(updateCategorie(formData))
 
-          await  dispatch(getCategories());
-        
+        await dispatch(getCategories());
+
         setValidated(true);
 
 
@@ -140,18 +147,28 @@ const Editcategorie = ({ cat }) => {
 
                                     <Row className="mb-2">
 
-                                       
-                                            <Form.Label>Image</Form.Label>
-                                            <FilePond
-                                                type="file"
-                                                files={files}
-                                                allowMultiple={false}
-                                                onupdatefiles={setFiles}
-                                                labelIdle='<span class="filepond--label-action">Browse
-One</span>'
-                                            />
 
-                                        
+                                        <Form.Label>Image</Form.Label>
+                                        <FilePond
+                                            type="file"
+                                            files={files}
+                                            allowMultiple={false}
+                                            onupdatefiles={setFiles}
+                                            labelIdle='<span class="filepond--label-action">Browse
+One</span>'
+                                            server={{
+                                                process: {
+                                                    url: '/process',
+                                                    method: 'GET',
+                                                    onload: (response) => {
+                                                        console.log(response);
+                                                    },
+                                                },
+                                                fetch: null,
+                                            }}
+                                        />
+
+
                                     </Row>
                                 </div>
                             </div>
