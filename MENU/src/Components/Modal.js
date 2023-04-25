@@ -32,7 +32,7 @@ export default function Modal(props) {
                             <button type="button" className="btn-close" onClick={props.hide}></button>
                         </div>
                         <div className="modal-body">
-                            <Card variant="outlined" sx={{ width: 350 }}>
+                            <Card variant="outlined" sx={{ width: 320 }}>
                                 <CardOverflow>
                                     <AspectRatio ratio="1">
                                         <picture>

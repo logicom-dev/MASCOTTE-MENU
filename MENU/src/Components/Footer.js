@@ -20,7 +20,7 @@ export default function Footer() {
               <h6 className='text-uppercase fw-bold mb-4'>Contact</h6>
               <p>
                 <MDBIcon icon="home" className="me-4" />
-                طريق القايد محمد كلم 3  Sfax, Tunisie
+                  Route kaied mhamed km 3, Sfax, Tunisie
               </p>
               <p>
                 <MDBIcon icon="envelope" className="me-3" />
