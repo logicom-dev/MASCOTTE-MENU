@@ -19,7 +19,6 @@ const Insertarticle = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [validated, setValidated] = useState(false);
     const [LibArt, setLibArt] = useState("");
     const [CodeArt, setCodeArt] = useState("");
     const [prix1, setprix1] = useState("");
@@ -27,7 +26,7 @@ const Insertarticle = () => {
     const [CodeCat, setCodeCat] = useState("");
     const [files, setFiles] = useState("");
     const [image_web, setImage_web] = useState("");
-    
+    const [validated, setValidated] = useState(false);
     const dispatch = useDispatch();
 
     const handleUpload = (event) => {
@@ -59,31 +58,30 @@ const Insertarticle = () => {
     const handleSubmit = async (event, url) => {
         event.preventDefault();
         setImage_web(url);
-            const article = {
-                LibArt: LibArt,
-                CodeArt: CodeArt,
-                prix1: prix1,
-                Descrip: Descrip,
-                CodeCat: CodeCat,
-                image_web: url
-            }
-            const formData = new FormData();
-            buildFormData(formData, article);
-            console.log(article)
-            dispatch(createArticle(formData))
-                .then(res => {
-                    console.log("Insert OK", res);
-                    setCodeArt("");
-                    setLibArt("");
-                    setprix1("");
-                    setDescrip("");
-                    setFiles("");
-                    setCodeCat("")
-                    setValidated(false);
-                    setImage_web("");
-                    handleClose()
-                })
-           await dispatch(getArticles());
+        const article = {
+            LibArt: LibArt,
+            CodeArt: CodeArt,
+            prix1: prix1,
+            Descrip: Descrip,
+            CodeCat: CodeCat,
+            image_web: url
+        }
+        const formData = new FormData();
+        buildFormData(formData, article);
+        console.log(article)
+        await dispatch(createArticle(formData))
+            .then(res => {
+                console.log("Insert OK", res);
+                setShow(false);
+                setLibArt("");
+                setCodeArt("");
+                setCodeCat("");
+                setprix1("");
+                setDescrip("");
+                setImage_web("");
+                setValidated(false);
+            })
+        await dispatch(getArticles());
 
     };
     return (
@@ -93,97 +91,85 @@ const Insertarticle = () => {
                 + Nouveau
             </Button>
             <Modal show={show} onHide={handleClose}>
-                <Form>
-                    <Modal.Header closeButton>
-                        <Modal.Title> <h1 align="center">Ajout Article</h1></Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="container w-100 d-flex justify-content-center">
-                            <div>
-                                <div className='form mt-3'>
-                                    <Row className="mb-2">
-                                        <Form.Group as={Col} md="6" >
-                                            <Form.Label >Référence *</Form.Label>
-                                            <Form.Control
-                                                required
-                                                type="text"
-                                                placeholder="CodeArt"
-                                                value={CodeArt}
-                                                onChange={(e) => setCodeArt(e.target.value)}
-                                            />
-            
-                                        </Form.Group>
-                                        <Form.Group as={Col} md="6">
-                                            <Form.Label>Désignation *</Form.Label>
-                                            <Form.Control
-                                                required
-                                                type="text"
-                                                placeholder="LibArt"
-                                                value={LibArt}
-                                                onChange={(e) => setLibArt(e.target.value)}
-                                            />
-                                          
-                                        </Form.Group>
-                                    </Row>
-                                    <Row className="mb-2">
-                                        <Form.Group className="col-md-6">
-                                            <Form.Label>Description</Form.Label>
-                                            <InputGroup hasValidation>
-                                                <Form.Control
-                                                    type="text"
-                                                    required
-                                                    placeholder="Description"
-                                                    value={Descrip}
-                                                    onChange={(e) => setDescrip(e.target.value)}
-                                                />
-                                            </InputGroup>
-                                        </Form.Group>
-                                        <Form.Group as={Col} md="6">
-                                            <Form.Label>Prix</Form.Label>
-                                            <Form.Control
-                                                type="number"
-                                                placeholder="Prix"
-                                                value={prix1}
-                                                onChange={(e) => setprix1(e.target.value)}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group as={Col} md="6">
-                                            <Form.Label>Code categorie</Form.Label>
-                                            <Form.Control
-                                                type="number"
-                                                placeholder="CodeCat"
-                                                value={CodeCat}
-                                                onChange={(e) => setCodeCat(e.target.value)}
-                                            />
-                                        </Form.Group>
-                                        <Form.Group as={Col} md="6">
-                                            <Form.Label>Image</Form.Label>
-                                            <FilePond
-                                                type="file"
-                                                files={files}
-                                                allowMultiple={false}
-                                                onupdatefiles={setFiles}
-                                                labelIdle='<span class="filepond--label-action">Browse
+                <Modal.Header closeButton>
+                    <Modal.Title> <h1 align="center">Ajout Article</h1></Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group as={Col} md="6" >
+                            <Form.Label >Code article *</Form.Label>
+                            <Form.Control
+                                required
+                                type="number"
+                                placeholder="CodeArt"
+                                value={CodeArt}
+                                onChange={(e) => setCodeArt(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group as={Col} md="6">
+                            <Form.Label>Désignation *</Form.Label>
+                            <Form.Control
+                                required
+                                type="text"
+                                placeholder="LibArt"
+                                value={LibArt}
+                                onChange={(e) => setLibArt(e.target.value)}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="col-md-6">
+                            <Form.Label>Description</Form.Label>
+
+                            <Form.Control
+                                type="text"
+                                required
+                                placeholder="Description"
+                                value={Descrip}
+                                onChange={(e) => setDescrip(e.target.value)}
+                            />
+
+                        </Form.Group>
+                        <Form.Group as={Col} md="6">
+                            <Form.Label>Prix</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Prix"
+                                value={prix1}
+                                onChange={(e) => setprix1(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} md="6">
+                            <Form.Label>Code categorie</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="CodeCat"
+                                value={CodeCat}
+                                onChange={(e) => setCodeCat(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} md="6">
+                            <Form.Label>Sélectionner une image</Form.Label>
+                            <FilePond
+                                type="file"
+                                files={files}
+                                allowMultiple={false}
+                                onupdatefiles={setFiles}
+                                labelIdle='<span class="filepond--label-action">Browse
 One</span>'
-                                            />
-                                        </Form.Group>
+                            />
+                        </Form.Group>
+                        </Form >
+                    </Modal.Body >
+    <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+            Fermer
+        </Button>
+        <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Ajouter</Button>
 
-                                    </Row>
-                                
-                                        
-                                </div>
-                            </div>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Fermer
-                        </Button>
-                        <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Ajouter</Button>
-
-                    </Modal.Footer>
-                </Form>
-            </Modal>
+    </Modal.Footer>
+                
+            </Modal >
         </>
     )
 }

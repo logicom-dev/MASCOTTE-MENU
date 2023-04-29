@@ -59,7 +59,7 @@ const Insertcategorie = () => {
         const formData = new FormData();
         buildFormData(formData, categorie);
         console.log(categorie);
-        dispatch(createCategorie(formData))
+        await dispatch(createCategorie(formData))
             .then(res => {
                 console.log("Insert OK", res);
                 setShow(false);

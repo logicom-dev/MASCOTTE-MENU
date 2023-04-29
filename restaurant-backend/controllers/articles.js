@@ -28,7 +28,7 @@ const getArticleByID = async (req, res) => {
 
 
 const createArticle = async (req, res) => {
-    
+
     const CodeCat = req.body.CodeCat;
     const Descrip = req.body.Descrip;
     const LibArt = req.body.LibArt;
