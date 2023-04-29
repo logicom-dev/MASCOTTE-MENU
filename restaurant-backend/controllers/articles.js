@@ -28,17 +28,19 @@ const getArticleByID = async (req, res) => {
 
 
 const createArticle = async (req, res) => {
+    
     const CodeCat = req.body.CodeCat;
     const Descrip = req.body.Descrip;
     const LibArt = req.body.LibArt;
     const prix1 = req.body.prix1;
     const CodeArt = req.body.CodeArt;
-    const url = req.protocol + '://' + req.get('host')
+    const image_web = req.body.image_web;
+   /*  const url = req.protocol + '://' + req.get('host')
     const imagepath = url + '/public//' + req.file.filename;
-
+ */
     try {
 
-        const art = await db.sequelize.query(`INSERT INTO article (CodeCat, Descrip, LibArt, prix1, CodeArt, image_web) VALUES ("${CodeCat}","${Descrip}","${LibArt}","${prix1}","${CodeArt}","${imagepath}")`);
+        const art = await db.sequelize.query(`INSERT INTO article (CodeCat, Descrip, LibArt, prix1, CodeArt, image_web) VALUES ("${CodeCat}","${Descrip}","${LibArt}","${prix1}","${CodeArt}","${image_web}")`);
         console.log(art);
         console.log("article added successfully !!");
         res.status(200).json(art);
@@ -54,12 +56,13 @@ const updateArticle = async (req, res) => {
     const Descrip = req.body.Descrip;
     const LibArt = req.body.LibArt;
     const prix1 = req.body.prix1;
-    const url = req.protocol + '://' + req.get('host')
-    const imagepath = url + '/public/' + req.file.filename;
+    const image_web = req.body.image_web;
+    /* const url = req.protocol + '://' + req.get('host')
+    const imagepath = url + '/public/' + req.file.filename; */
 
     try {
 
-        const cat = await db.sequelize.query(`UPDATE article SET Descrip ="${Descrip}", LibArt = "${LibArt}", prix1 ="${prix1}", CodeCat = "${CodeCat}", image_web = "${imagepath}" WHERE  CodeArt = "${CodeArt}"`);
+        const cat = await db.sequelize.query(`UPDATE article SET Descrip ="${Descrip}", LibArt = "${LibArt}", prix1 ="${prix1}", CodeCat = "${CodeCat}", image_web = "${image_web}" WHERE  CodeArt = "${CodeArt}"`);
         console.log(cat)
         res.json({ message: "article updated successfully!" });
     } catch (error) {

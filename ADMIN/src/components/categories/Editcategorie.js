@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -19,43 +19,51 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 const Editcategorie = ({ cat }) => {
 
+    console.log(cat.Image)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [validated, setValidated] = useState(false);
-    const [CodeCat] = useState(cat.CodeCat);
+    const [CodeCat, setCodeCat] = useState(cat.CodeCat);
     const [DesCat, setDesCat] = useState(cat.DesCat);
-    const [files, setFiles] = useState([
-        {
-            source: cat.Image.toString(),
-
-        },
-    ]);
+    const [files, setFiles] = useState("");
     const [Image, setImage] = useState("");
 
-    
 
-
+    /*  useEffect(() => {
+        cat.Image.getDownloadURL().then((url) => {
+           fetch(url)
+             .then((res) => res.blob())
+             .then((blob) => {
+               const file = new File([blob], "filename.jpg", { type: "files/jpg" });
+               setFiles(file);
+             });
+         });
+       }, []);
+  */
 
     const dispatch = useDispatch();
-    /* function isFile(obj) {
-        return obj.constructor === File;
-    }
-    function blobToFile(blob, fileName) {
-        // Create a new FormData object
-        const formData = new FormData();
 
-        // Append the Blob object to the FormData object with the specified file name
-        formData.append('file', blob, fileName);
-
-        // Extract the File object from the FormData object
-        const file = formData.get('file');
-
-        return file;
-    } */
+    /* //Dans le cas de multer
+     function isFile(obj) {
+         return obj.constructor === File;
+     }
+     function blobToFile(blob, fileName) {
+         // Create a new FormData object
+         const formData = new FormData();
+ 
+         // Append the Blob object to the FormData object with the specified file name
+         formData.append('file', blob, fileName);
+ 
+         // Extract the File object from the FormData object
+         const file = formData.get('file');
+ 
+         return file;
+     } */
     const handleUpload = (event) => {
         if (!files[0].file) {
             alert("Please upload an image first!");
+            console.log("Please upload an image first!")
         }
         console.log(files[0].file)
         resultHandleUpload(files[0].file, event);
@@ -80,7 +88,7 @@ const Editcategorie = ({ cat }) => {
     }
     const handleSubmit = async (event, url) => {
         event.preventDefault();
-        setImage(url);
+        setFiles(url);
         const categorie = {
 
             CodeCat: CodeCat,
@@ -89,25 +97,57 @@ const Editcategorie = ({ cat }) => {
 
         }
         console.log(categorie.Image);
+        if( categorie.Image === undefined) {
+            console.log("the image category is undefined")
+            console.log(cat.Image)
+            setFiles(cat.Image)
+            setImage(cat.Image)
+            categorie.Image = cat.Image
+           }
 
-        /*   if (isFile(categorie.Image)) {
-              console.log('It is a File no need to change')
-              console.log(files[0].file.name)
-          }
-          else {
-              console.log('It is a Blob, change it to a File')
-              categorie.Image = blobToFile(files[0].file, files[0].file.name);
-          }
+        else {
+            console.log("Vous avez changer l'image de votre categorie")
+            console.log(categorie.Image)
+            setFiles(categorie.Image)
+           
+        }   
 
-*/
-        console.log(categorie.Image);
+        /* if (isFile(categorie.Image)) {
+            console.log('It is a File no need to change')
+            console.log(files[0].file.name)
+        }
+        else {
+            console.log('It is a Blob, change it to a File')
+            categorie.Image = blobToFile(files[0].file, files[0].file.name);
+        }
+         */
+    
+        /* 
+                  if (isFile(categorie.Image)) {
+                      console.log('It is a File no need to change')
+                      console.log(files[0].file.name)
+                  }
+                  else {
+                      console.log('It is a Blob, change it to a File')
+                      categorie.Image = blobToFile(files[0].file, files[0].file.name);
+                  } */
+
         const formData = new FormData();
         buildFormData(formData, categorie);
-        dispatch(updateCategorie(formData))
+        console.log(categorie)
+        await dispatch(updateCategorie(formData))
+            .then(res => {
+                console.log("edit OK", res);
+                setShow(false);
+                setDesCat("");
+                setImage("");
+                setFiles("");
+                setValidated(false);
+            })
 
         await dispatch(getCategories());
 
-        setValidated(true);
+        // setValidated(true);
 
 
     };
@@ -149,24 +189,22 @@ const Editcategorie = ({ cat }) => {
 
 
                                         <Form.Label>Image</Form.Label>
+
+                                        <img
+                                            src={`${cat.Image}`} width={70} height={200}
+                                            alt="" />
+                                            <p>Télècharger une nouvelle image</p>
                                         <FilePond
                                             type="file"
                                             files={files}
                                             allowMultiple={false}
                                             onupdatefiles={setFiles}
-                                            labelIdle='<span class="filepond--label-action">Browse
-One</span>'
-                                            server={{
-                                                process: {
-                                                    url: '/process',
-                                                    method: 'GET',
-                                                    onload: (response) => {
-                                                        console.log(response);
-                                                    },
-                                                },
-                                                fetch: null,
-                                            }}
+                                            labelIdle='<span class="filepond--label-action">
+                                            Cliquer ici pour télécharger une nouvelle image
+                                            </span>'
+
                                         />
+                                        
 
 
                                     </Row>

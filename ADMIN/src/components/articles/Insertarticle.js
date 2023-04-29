@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import { useDispatch } from "react-redux";
+import { UploadFirebase } from '../../Utils/UploadFirebase';
 import { createArticle, getArticles } from "../../features/articleSlice"
 import { buildFormData } from "../../Utils/ConvertFormData";
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -25,23 +26,51 @@ const Insertarticle = () => {
     const [Descrip, setDescrip] = useState("");
     const [CodeCat, setCodeCat] = useState("");
     const [files, setFiles] = useState("");
+    const [image_web, setImage_web] = useState("");
+    
     const dispatch = useDispatch();
 
-    const handleSubmit = async (event) => {
+    const handleUpload = (event) => {
+        if (!files[0].file) {
+            alert("Please upload an image first!");
+        }
+        console.log(files[0].file)
+        resultHandleUpload(files[0].file, event);
+
+    };
+
+    const resultHandleUpload = async (image, event) => {
+
+
+        try {
+
+            await UploadFirebase(image).then((url) => {
+                console.log(url);
+
+                handleSubmit(event, url);
+            })
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const handleSubmit = async (event, url) => {
         event.preventDefault();
-        const form = event.currentTarget;
-        if (form.checkValidity() === true) {
+        setImage_web(url);
             const article = {
                 LibArt: LibArt,
                 CodeArt: CodeArt,
                 prix1: prix1,
                 Descrip: Descrip,
                 CodeCat: CodeCat,
-                imagepath: files[0].file
+                image_web: url
             }
             const formData = new FormData();
             buildFormData(formData, article);
-            await dispatch(createArticle(formData))
+            console.log(article)
+            dispatch(createArticle(formData))
                 .then(res => {
                     console.log("Insert OK", res);
                     setCodeArt("");
@@ -51,15 +80,11 @@ const Insertarticle = () => {
                     setFiles("");
                     setCodeCat("")
                     setValidated(false);
+                    setImage_web("");
                     handleClose()
                 })
-                .catch(error => {
-                    console.log(error)
-                    alert("Erreur ! Insertion non effectuée")
-                })
-            dispatch(getArticles());
-        }
-        setValidated(true);
+           await dispatch(getArticles());
+
     };
     return (
         <>
@@ -68,7 +93,7 @@ const Insertarticle = () => {
                 + Nouveau
             </Button>
             <Modal show={show} onHide={handleClose}>
-                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form>
                     <Modal.Header closeButton>
                         <Modal.Title> <h1 align="center">Ajout Article</h1></Modal.Title>
                     </Modal.Header>
@@ -86,9 +111,7 @@ const Insertarticle = () => {
                                                 value={CodeArt}
                                                 onChange={(e) => setCodeArt(e.target.value)}
                                             />
-                                            <Form.Control.Feedback type="invalid">
-                                                Saisir Référence Article
-                                            </Form.Control.Feedback>
+            
                                         </Form.Group>
                                         <Form.Group as={Col} md="6">
                                             <Form.Label>Désignation *</Form.Label>
@@ -99,9 +122,7 @@ const Insertarticle = () => {
                                                 value={LibArt}
                                                 onChange={(e) => setLibArt(e.target.value)}
                                             />
-                                            <Form.Control.Feedback type="invalid">
-                                                Saisir Désignation
-                                            </Form.Control.Feedback>
+                                          
                                         </Form.Group>
                                     </Row>
                                     <Row className="mb-2">
@@ -158,7 +179,8 @@ One</span>'
                         <Button variant="secondary" onClick={handleClose}>
                             Fermer
                         </Button>
-                        <Button type="submit">Enregistrer</Button>
+                        <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Ajouter</Button>
+
                     </Modal.Footer>
                 </Form>
             </Modal>
