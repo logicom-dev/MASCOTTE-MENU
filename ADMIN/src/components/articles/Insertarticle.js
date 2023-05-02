@@ -96,6 +96,7 @@ const Insertarticle = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
+                    <Row className="mb-2">
                         <Form.Group as={Col} md="6" >
                             <Form.Label >Code article *</Form.Label>
                             <Form.Control
@@ -117,7 +118,8 @@ const Insertarticle = () => {
                                 onChange={(e) => setLibArt(e.target.value)}
                             />
                         </Form.Group>
-
+                        </Row>
+                        <Row className="mb-2">
                         <Form.Group className="col-md-6">
                             <Form.Label>Description</Form.Label>
 
@@ -139,7 +141,10 @@ const Insertarticle = () => {
                                 onChange={(e) => setprix1(e.target.value)}
                             />
                         </Form.Group>
+                        </Row>
+                        <Row className="mb-2">
                         <Form.Group as={Col} md="6">
+                        
                             <Form.Label>Code categorie</Form.Label>
                             <Form.Control
                                 type="number"
@@ -159,6 +164,7 @@ const Insertarticle = () => {
 One</span>'
                             />
                         </Form.Group>
+                        </Row>
                         </Form >
                     </Modal.Body >
     <Modal.Footer>

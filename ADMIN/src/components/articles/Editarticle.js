@@ -218,7 +218,7 @@ const Editarticle = ({ art }) => {
                                         <Form.Group as={Col} md="6">
 
                                             <Form.Label>changer l'image de l'article</Form.Label>
-
+                                                
 
                                             <FilePond
                                                 type="file"
