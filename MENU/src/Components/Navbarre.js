@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 export default function Navbarre() {
   const navigate = useNavigate();
-  const {cartTotalQuantity} = useSelector((state) => state.cart);
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -20,16 +20,16 @@ export default function Navbarre() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/Articlesearch" >Recherche par Article</Nav.Link>
-            <Nav.Link as={Link} to="/Categoriesearch" >Recherche par Categorie</Nav.Link>
+            <Nav.Link as={Link} to="/Articlesearch" >Articles</Nav.Link>
+            <Nav.Link as={Link} to="/" >Catégories</Nav.Link>
           </Nav>
           <Button color="inherit"><Link to="/cart" style={{ "color": "yellow", "textDecoration": "none", borderRadius: '50%', fontSize: 26 }}>
             <ShoppingCartIcon sx={{ fontSize: 40 }} /></Link>
             <Badge badgeContent={cartTotalQuantity > 0 ? cartTotalQuantity : 0}
               color="success">
             </Badge>
-            </Button>
-        
+          </Button>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -6,12 +6,11 @@ import SearchBarSection from "./Components/SearchBarSection";
 import CartArticle from "./Components/Articles/Cart";
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Navbarre />
       <Routes>
-        <Route path="/" element={<Navigate to="/Categoriesearch" /> }></Route>
+        <Route path="/" element={<Categorie />}></Route>
         <Route path='/Articlesearch' element={<SearchBarSection />} />
-        <Route path='/Categoriesearch' element={<Categorie />} />
         <Route path='/cart' element={<CartArticle />} />
       </Routes>
       <Footer />
