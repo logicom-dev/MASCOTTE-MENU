@@ -29,8 +29,8 @@ const Insertarticle = () => {
     const [Descrip, setDescrip] = useState("");
     const [CodeCat, setCodeCat] = useState("");
     const [files, setFiles] = useState("");
-    const [setImage_web] = useState("");
-    const [setValidated] = useState(false);
+    const [Image ,setImage_web] = useState("");
+    const [Validated, setValidated] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCategories());
@@ -79,7 +79,6 @@ const Insertarticle = () => {
                 setCodeCat("");
                 setprix1("");
                 setDescrip("");
-                setImage_web("");
                 setValidated(false);
             })
         await dispatch(getArticles());
