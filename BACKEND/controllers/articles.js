@@ -5,7 +5,7 @@ const Article = db.article;
 
 const getArticles = async (req, res) => {
     try {
-        const art = await db.sequelize.query(`select CodeArt, LibArt, Descrip, CodeCat, prix1, image_web from article WHERE  visible_web = "1"`);
+        const art = await db.sequelize.query(`select CodeArt, LibArt, Descrip, CodeCat, prix1, image_web, visible_web from article WHERE  visible_web = "1"`);
 
         res.status(200).json(art[0]);
     } catch (error) {
