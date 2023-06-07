@@ -29,23 +29,21 @@ const AfficheCategories = () => {
     }
     const columns = [
         {
-            label: "CodeCat",
+            label: "Code",
             name: "CodeCat",
             options: {
                 filter: false,
-                sort: false
             }
         },
         {
-            label: "DesCat",
+            label: "Désignation",
             name: "DesCat",
             options: {
                 filter: false,
-                sort: false
             }
         },
         {
-            label: "visible dans menu",
+            label: "Visibilité",
             name: "visible_web",
             options: {
                 customBodyRender: (value) => {
@@ -99,7 +97,7 @@ const AfficheCategories = () => {
         return <React.Fragment>
             {categories &&
                 <MUIDataTable
-                    title="Liste categories"
+                    title="Liste des categories"
                     data={categories}
                     columns={columns}
                     options={{

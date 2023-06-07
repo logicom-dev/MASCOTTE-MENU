@@ -30,27 +30,24 @@ const AfficheArticles = () => {
     }
     const columns = [
         {
-            label: "LibArt",
+            label: "Désignation",
             name: "LibArt",
             options: {
                 filter: false,
-                sort: false
             }
         },
         {
-            label: "CodeArt",
+            label: "Code",
             name: "CodeArt",
             options: {
                 filter: false,
-                sort: false
             }
         },
         {
-            label: "Descrip",
+            label: "Description",
             name: "Descrip",
             options: {
                 filter: false,
-                sort: false
             }
         },
         {
@@ -58,11 +55,10 @@ const AfficheArticles = () => {
             name: "prix1",
             options: {
                 filter: false,
-                sort: false
             }
         },
         {
-            label: "Categorie",
+            label: "Catégorie",
             name: "CodeCat",
             options: {
                 customBodyRender: (value) => {
@@ -72,7 +68,7 @@ const AfficheArticles = () => {
             }
         },
         {
-            label: "visible dans menu",
+            label: "Visibilité",
             name: "visible_web",
             options: {
                 customBodyRender: (value) => {
@@ -81,7 +77,7 @@ const AfficheArticles = () => {
               }
         },
         {
-            label: "image_web",
+            label: "Image",
             name: "image_web",
             options: {
                 customBodyRender: (image_web) => (
@@ -124,7 +120,7 @@ const AfficheArticles = () => {
         return <React.Fragment>
             {articles &&
                 <MUIDataTable
-                    title="Liste articles"
+                    title="Liste des articles"
                     data={articles}
                     columns={columns}
                     options={{
