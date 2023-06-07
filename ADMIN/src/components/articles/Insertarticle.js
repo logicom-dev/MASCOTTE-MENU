@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
-import { useDispatch } from "react-redux";
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import { useDispatch, useSelector } from "react-redux";
+import { findCategorieByID, getCategories } from "../../features/categorieSlice"
 import { UploadFirebase } from '../../Utils/UploadFirebase';
 import { createArticle, getArticles } from "../../features/articleSlice"
 import { buildFormData } from "../../Utils/ConvertFormData";
@@ -16,6 +19,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 const Insertarticle = () => {
+    const { categories } = useSelector((state) => state.storecategories);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -25,36 +29,33 @@ const Insertarticle = () => {
     const [Descrip, setDescrip] = useState("");
     const [CodeCat, setCodeCat] = useState("");
     const [files, setFiles] = useState("");
-    const [image_web, setImage_web] = useState("");
-    const [validated, setValidated] = useState(false);
+    const [setImage_web] = useState("");
+    const [setValidated] = useState(false);
     const dispatch = useDispatch();
-
+    useEffect(() => {
+        dispatch(getCategories());
+    }, [dispatch]);
+    const GetListCategories = async (idcat) => {
+        dispatch(findCategorieByID(idcat));
+    }
     const handleUpload = (event) => {
         if (!files[0].file) {
             alert("Please upload an image first!");
         }
         console.log(files[0].file)
         resultHandleUpload(files[0].file, event);
-
     };
-
     const resultHandleUpload = async (image, event) => {
-
-
         try {
-
             await UploadFirebase(image).then((url) => {
                 console.log(url);
 
                 handleSubmit(event, url);
             })
-
         } catch (error) {
             console.log(error);
         }
-
     }
-
     const handleSubmit = async (event, url) => {
         event.preventDefault();
         setImage_web(url);
@@ -82,7 +83,6 @@ const Insertarticle = () => {
                 setValidated(false);
             })
         await dispatch(getArticles());
-
     };
     return (
         <>
@@ -96,85 +96,103 @@ const Insertarticle = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                    <Row className="mb-2">
-                        <Form.Group as={Col} md="6" >
-                            <Form.Label >Code article *</Form.Label>
-                            <Form.Control
-                                required
-                                type="number"
-                                placeholder="CodeArt"
-                                value={CodeArt}
-                                onChange={(e) => setCodeArt(e.target.value)}
-                            />
-                        </Form.Group>
-
-                        <Form.Group as={Col} md="6">
-                            <Form.Label>Désignation *</Form.Label>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="LibArt"
-                                value={LibArt}
-                                onChange={(e) => setLibArt(e.target.value)}
-                            />
-                        </Form.Group>
+                        <Row className="mb-2">
+                            <Form.Group as={Col} md="6" >
+                                <Form.Label >Code article *</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="number"
+                                    placeholder="CodeArt"
+                                    value={CodeArt}
+                                    onChange={(e) => setCodeArt(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="6">
+                                <Form.Label>Désignation *</Form.Label>
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    placeholder="LibArt"
+                                    value={LibArt}
+                                    onChange={(e) => setLibArt(e.target.value)}
+                                />
+                            </Form.Group>
                         </Row>
                         <Row className="mb-2">
-                        <Form.Group className="col-md-6">
-                            <Form.Label>Description</Form.Label>
-
-                            <Form.Control
-                                type="text"
-                                required
-                                placeholder="Description"
-                                value={Descrip}
-                                onChange={(e) => setDescrip(e.target.value)}
-                            />
-
-                        </Form.Group>
-                        <Form.Group as={Col} md="6">
-                            <Form.Label>Prix</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="Prix"
-                                value={prix1}
-                                onChange={(e) => setprix1(e.target.value)}
-                            />
-                        </Form.Group>
+                            <Form.Group className="col-md-6">
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    required
+                                    placeholder="Description"
+                                    value={Descrip}
+                                    onChange={(e) => setDescrip(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col} md="6">
+                                <Form.Label>Prix</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Prix"
+                                    value={prix1}
+                                    onChange={(e) => setprix1(e.target.value)}
+                                />
+                            </Form.Group>
                         </Row>
                         <Row className="mb-2">
-                        <Form.Group as={Col} md="6">
-                        
-                            <Form.Label>Code categorie</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="CodeCat"
-                                value={CodeCat}
-                                onChange={(e) => setCodeCat(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} md="6">
-                            <Form.Label>Sélectionner une image</Form.Label>
-                            <FilePond
-                                type="file"
-                                files={files}
-                                allowMultiple={false}
-                                onupdatefiles={setFiles}
-                                labelIdle='<span class="filepond--label-action">Browse
+                            <Form.Group as={Col} md="6">
+
+                                <Form.Label>Code categorie</Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="CodeCat"
+                                    value={CodeCat}
+                                    onChange={(e) => setCodeCat(e.target.value)}
+                                />
+                                <FormControl style={{ width: 200 }}>
+                                    <TextField
+                                        select
+                                        label="Catégories"
+                                        variant="outlined"
+                                        value={CodeCat}
+                                        style={{ width: "200", marginLeft: 8 }}
+                                        onChange={(event) => {
+                                            setCodeCat(event.target.value); GetListCategories(event.target.value)
+                                        }}
+                                        helperText="Sélectionner une catégorie"
+                                    >
+                                        {
+                                            categories ?
+                                                categories.map(cat =>
+                                                    <MenuItem key={cat.CodeCat}
+                                                        value={cat.CodeCat}>{cat.DesCat}
+                                                    </MenuItem>
+                                                )
+                                                : null
+                                        }
+                                    </TextField>
+                                </FormControl>
+                            </Form.Group>
+                            <Form.Group as={Col} md="6">
+                                <Form.Label>Sélectionner une image</Form.Label>
+                                <FilePond
+                                    type="file"
+                                    files={files}
+                                    allowMultiple={false}
+                                    onupdatefiles={setFiles}
+                                    labelIdle='<span class="filepond--label-action">Browse
 One</span>'
-                            />
-                        </Form.Group>
+                                />
+                            </Form.Group>
                         </Row>
-                        </Form >
-                    </Modal.Body >
-    <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-            Fermer
-        </Button>
-        <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Ajouter</Button>
-
-    </Modal.Footer>
-                
+                    </Form >
+                </Modal.Body >
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Fermer
+                    </Button>
+                    <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Ajouter</Button>
+                </Modal.Footer>
             </Modal >
         </>
     )

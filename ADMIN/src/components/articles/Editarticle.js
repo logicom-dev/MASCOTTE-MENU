@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import FormControl from '@mui/material/FormControl';
 import Col from 'react-bootstrap/Col';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
+import { findCategorieByID, getCategories } from "../../features/categorieSlice";
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UploadFirebase } from '../../Utils/UploadFirebase';
 import { updateArticle, getArticles } from "../../features/articleSlice"
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -16,22 +20,27 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-
 const Editarticle = ({ art }) => {
-
+    const { categories } = useSelector((state) => state.storecategories);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [validated, setValidated] = useState(false);
-    const [LibArt, setLibArt] = useState(art.LibArt);
-    const [CodeArt] = useState(art.CodeArt);
-    const [prix1, setprix1] = useState(art.prix1);
-    const [Descrip, setDescrip] = useState(art.Descrip);
-    const [CodeCat, setCodeCat] = useState(art.CodeCat);
+    const [LibArt, setLibArt] = useState("");
+    const [CodeArt, setCodeArt] = useState("");
+    const [prix1, setprix1] = useState("");
+    const [Descrip, setDescrip] = useState("");
+    const [CodeCat, setCodeCat] = useState("");
+    const [visible, setVisible] = useState("");
     const [image_web, setImage_web] = useState("");
     const [files, setFiles] = useState("");
     const dispatch = useDispatch();
-
+    useEffect(() => {
+        dispatch(getCategories());
+    }, [dispatch]);
+    const GetListCategories = async (idcat) => {
+        dispatch(findCategorieByID(idcat));
+    }
     /* // Dans le cas de Multer
     function isFile(obj) {
         return obj.constructor === File;
@@ -48,7 +57,6 @@ const Editarticle = ({ art }) => {
       
         return file;
       } */
-
     const handleUpload = (event) => {
         if (!files[0].file) {
             alert("Please upload an image first!");
@@ -56,39 +64,49 @@ const Editarticle = ({ art }) => {
         }
         console.log(files[0].file)
         resultHandleUpload(files[0].file, event);
-
     };
-
     const resultHandleUpload = async (image, event) => {
-
-
         try {
-
             await UploadFirebase(image).then((url) => {
                 console.log(url);
-
                 handleSubmit(event, url);
             })
 
         } catch (error) {
             console.log(error);
         }
-
     }
     const handleSubmit = async (event, url) => {
         event.preventDefault();
         setFiles(url);
         const article = {
-
             LibArt: LibArt,
             CodeArt: CodeArt,
             prix1: prix1,
             Descrip: Descrip,
             CodeCat: CodeCat,
+            visible_web: visible,
             image_web: url
-
         }
         console.log(article.image_web);
+        if (article.CodeArt === "") {
+            article.CodeArt = art.CodeArt;
+        }
+        if (article.Descrip === "") {
+            article.Descrip = art.Descrip;
+        }
+        if (article.LibArt === "") {
+            article.LibArt = art.LibArt;
+        }
+        if (article.CodeCat === "") {
+            article.CodeCat = art.CodeCat;
+        }
+        if (article.visible_web === "") {
+            article.visible_web = art.visible_web;
+        }
+        if (article.prix1 === "") {
+            article.prix1 = art.prix1;
+        }
         if (article.image_web === undefined) {
             console.log("the article image is undefined")
             console.log(art.image_web)
@@ -96,14 +114,11 @@ const Editarticle = ({ art }) => {
             setImage_web(art.image_web)
             article.image_web = art.image_web
         }
-
         else {
             console.log("Vous avez changer l'image de votre article")
             console.log(article.image_web)
             setFiles(article.image_web)
-
         }
-
         /*  if (isFile(article.imagepath)) {
              console.log('It is a File no need to change')
              console.log(files[0].file.name)
@@ -112,8 +127,6 @@ const Editarticle = ({ art }) => {
              console.log('It is a Blob, change it to a File')
              article.imagepath = blobToFile(files[0].file, files[0].file.name);
          } */
-
-
         console.log(article.image_web);
         const formData = new FormData();
         buildFormData(formData, article);
@@ -127,16 +140,11 @@ const Editarticle = ({ art }) => {
                 setCodeCat("");
                 setFiles("");
                 setImage_web("");
+                setVisible("");
                 setValidated(false);
             })
-
-
-
         await dispatch(getArticles());
-
         setValidated(true);
-
-
     };
     return (
         <>
@@ -156,47 +164,80 @@ const Editarticle = ({ art }) => {
                             <div>
                                 <div className='form mt-3'>
                                     <Row className="mb-2">
-                                        <Form.Group className="col-md-6 ">
-                                            <Form.Label>Code categorie</Form.Label>
+                                        <Form.Label>Description : {`${art.Descrip}`}</Form.Label>
+                                        <InputGroup hasValidation>
                                             <Form.Control
-                                                type="number"
-                                                placeholder="CodeCat"
-                                                value={CodeCat}
-                                                onChange={(e) => setCodeCat(e.target.value)}
+                                                type="text"
+                                                required
+                                                placeholder="Modifier la description de l'article"
+                                                value={Descrip}
+                                                onChange={(e) => setDescrip(e.target.value)}
                                             />
-                                        </Form.Group>
+                                        </InputGroup>
+                                    </Row>
+                                    <Row className="mb-2">
                                         <Form.Group as={Col} md="6">
-                                            <Form.Label>Désignation *</Form.Label>
+                                            <Form.Label>Désignation : {`${art.LibArt}`}</Form.Label>
                                             <Form.Control
                                                 required
                                                 type="text"
-                                                placeholder="LibArt"
+                                                placeholder="Modifier le nom de l'article"
                                                 value={LibArt}
                                                 onChange={(e) => setLibArt(e.target.value)}
                                             />
-                                            <Form.Control.Feedback type="invalid">
-                                                Saisir Désignation
-                                            </Form.Control.Feedback>
+                                        </Form.Group>
+                                        <Form.Group className="col-md-6">
+                                            <Form.Label>visible dans menu : {`${art.visible_web}`}</Form.Label>
+                                            <Form.Control
+                                            as="select"
+                                            required
+                                            value={visible}
+                                            onChange={(e) => setVisible(e.target.value)}
+                                        >
+                                            <option value="">Visibilité dans le web</option>
+                                            <option value="1">Visible</option>
+                                            <option value="0">Non visible</option>
+                                        </Form.Control>
                                         </Form.Group>
                                     </Row>
                                     <Row className="mb-2">
-                                        <Form.Group className="col-md-6">
-                                            <Form.Label>Description</Form.Label>
-                                            <InputGroup hasValidation>
-                                                <Form.Control
-                                                    type="text"
-                                                    required
-                                                    placeholder="Description"
-                                                    value={Descrip}
-                                                    onChange={(e) => setDescrip(e.target.value)}
-                                                />
-                                            </InputGroup>
-                                        </Form.Group>
-                                        <Form.Group as={Col} md="6">
-                                            <Form.Label>Prix</Form.Label>
+                                        <Form.Group className="col-md-6 ">
+                                            <Form.Label>Code categorie : {`${art.CodeCat}`}</Form.Label>
                                             <Form.Control
                                                 type="number"
-                                                placeholder="Prix"
+                                                placeholder="Modifier la categorie de l'article"
+                                                value={CodeCat}
+                                                onChange={(e) => setCodeCat(e.target.value)}
+                                            />
+                                            <FormControl style={{ width: 200 }}>
+                                                <TextField
+                                                    select
+                                                    label="Catégories"
+                                                    variant="outlined"
+                                                    value={CodeCat}
+                                                    style={{ width: "200", marginLeft: 8 }}
+                                                    onChange={(event) => {
+                                                        setCodeCat(event.target.value); GetListCategories(event.target.value)
+                                                    }}
+                                                    helperText="Sélectionner une catégorie"
+                                                >
+                                                    {
+                                                        categories ?
+                                                            categories.map(cat =>
+                                                                <MenuItem key={cat.CodeCat}
+                                                                    value={cat.CodeCat}>{cat.DesCat}
+                                                                </MenuItem>
+                                                            )
+                                                            : null
+                                                    }
+                                                </TextField>
+                                            </FormControl>
+                                        </Form.Group>
+                                        <Form.Group as={Col} md="6">
+                                            <Form.Label>Prix : {`${art.prix1}`}</Form.Label>
+                                            <Form.Control
+                                                type="number"
+                                                placeholder="Modifier le Prix de l'article"
                                                 value={prix1}
                                                 onChange={(e) => setprix1(e.target.value)}
                                             />
@@ -204,22 +245,12 @@ const Editarticle = ({ art }) => {
                                     </Row>
                                     <Row className="mb-3">
                                         <Form.Group as={Col} md="6">
-
-                                            
                                             <img
-                                            src={`${art.image_web}`} width={150} height={150}
-                                            alt="" />
-                                        
-                                       
-
-                                            
+                                                src={`${art.image_web}`} width={150} height={150}
+                                                alt="" />
                                         </Form.Group>
-
                                         <Form.Group as={Col} md="6">
-
                                             <Form.Label>changer l'image de l'article</Form.Label>
-                                                
-
                                             <FilePond
                                                 type="file"
                                                 files={files}
@@ -227,7 +258,6 @@ const Editarticle = ({ art }) => {
                                                 onupdatefiles={setFiles}
                                                 labelIdle='<span class="filepond--label-action"> Cliquer ici pour télécharger une nouvelle image</span>'
                                             />
-
                                         </Form.Group>
                                     </Row>
                                 </div>

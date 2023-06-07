@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
-import storage from "../../firebaseConfig";
-import { ref } from "firebase/storage";
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import { useDispatch } from "react-redux";
 import { updateCategorie, getCategories } from '../../features/categorieSlice';
@@ -16,34 +14,18 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-
 const Editcategorie = ({ cat }) => {
-
-    console.log(cat.Image)
+    console.log(cat)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [validated, setValidated] = useState(false);
-    const [CodeCat, setCodeCat] = useState(cat.CodeCat);
-    const [DesCat, setDesCat] = useState(cat.DesCat);
+    const [visible, setVisible] = useState("");
+    const [CodeCat, setCodeCat] = useState("");
+    const [DesCat, setDesCat] = useState("");
     const [files, setFiles] = useState("");
     const [Image, setImage] = useState("");
-
-
-    /*  useEffect(() => {
-        cat.Image.getDownloadURL().then((url) => {
-           fetch(url)
-             .then((res) => res.blob())
-             .then((blob) => {
-               const file = new File([blob], "filename.jpg", { type: "files/jpg" });
-               setFiles(file);
-             });
-         });
-       }, []);
-  */
-
     const dispatch = useDispatch();
-
     /* //Dans le cas de multer
      function isFile(obj) {
          return obj.constructor === File;
@@ -67,51 +49,49 @@ const Editcategorie = ({ cat }) => {
         }
         console.log(files[0].file)
         resultHandleUpload(files[0].file, event);
-
     };
-
     const resultHandleUpload = async (image, event) => {
-
-
         try {
-
             await UploadFirebase(image).then((url) => {
                 console.log(url);
 
                 handleSubmit(event, url);
             })
-
         } catch (error) {
             console.log(error);
         }
-
     }
     const handleSubmit = async (event, url) => {
         event.preventDefault();
         setFiles(url);
         const categorie = {
-
+            visible_web: visible,
             CodeCat: CodeCat,
             DesCat: DesCat,
             Image: url
-
         }
         console.log(categorie.Image);
-        if( categorie.Image === undefined) {
+        if (categorie.Image === undefined) {
             console.log("the image category is undefined")
             console.log(cat.Image)
             setFiles(cat.Image)
             setImage(cat.Image)
             categorie.Image = cat.Image
-           }
-
+        }
+        if (categorie.visible_web === "") {
+            categorie.visible_web = cat.visible_web
+        }
+        if (categorie.CodeCat === "") {
+            categorie.CodeCat = cat.CodeCat
+        }
+        if (categorie.DesCat === "") {
+            categorie.DesCat = cat.DesCat
+        }
         else {
             console.log("Vous avez changer l'image de votre categorie")
             console.log(categorie.Image)
             setFiles(categorie.Image)
-           
-        }   
-
+        }
         /* if (isFile(categorie.Image)) {
             console.log('It is a File no need to change')
             console.log(files[0].file.name)
@@ -121,7 +101,7 @@ const Editcategorie = ({ cat }) => {
             categorie.Image = blobToFile(files[0].file, files[0].file.name);
         }
          */
-    
+
         /* 
                   if (isFile(categorie.Image)) {
                       console.log('It is a File no need to change')
@@ -131,7 +111,6 @@ const Editcategorie = ({ cat }) => {
                       console.log('It is a Blob, change it to a File')
                       categorie.Image = blobToFile(files[0].file, files[0].file.name);
                   } */
-
         const formData = new FormData();
         buildFormData(formData, categorie);
         console.log(categorie)
@@ -142,14 +121,10 @@ const Editcategorie = ({ cat }) => {
                 setDesCat("");
                 setImage("");
                 setFiles("");
+                setVisible("");
                 setValidated(false);
             })
-
         await dispatch(getCategories());
-
-        // setValidated(true);
-
-
     };
     return (
         <>
@@ -162,38 +137,43 @@ const Editcategorie = ({ cat }) => {
             <Modal show={show} onHide={handleClose}>
                 <Form noValidate validated={validated} onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
-                        <Modal.Title> <h1 align="center">Modification Article</h1></Modal.Title>
+                        <Modal.Title> <h1 align="center">Modification Categorie</h1></Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className="container w-100 d-flex justify-content-center">
                             <div>
                                 <div className='form mt-3'>
                                     <Row className="mb-2">
-
-
-                                        <Form.Label>Désignation *</Form.Label>
+                                        <Form.Label>Désignation : {`${cat.DesCat}`} </Form.Label>
                                         <Form.Control
                                             required
                                             type="text"
-                                            placeholder="Nom categorie"
+                                            placeholder="Modifier le Nom de la categorie"
                                             value={DesCat}
                                             onChange={(e) => setDesCat(e.target.value)}
+
                                         />
-                                        <Form.Control.Feedback type="invalid">
-                                            Saisir Désignation
-                                        </Form.Control.Feedback>
-
                                     </Row>
-
                                     <Row className="mb-2">
-
-
+                                        <Form.Label>visible dans menu : {`${cat.visible_web}`}</Form.Label>
+                                        <Form.Control
+                                            as="select"
+                                            required
+                                            value={visible}
+                                            onChange={(e) => setVisible(e.target.value)}
+                                        >
+                                            <option value="">Visibilité dans le web</option>
+                                            <option value="1">Visible</option>
+                                            <option value="0">Non visible</option>
+                                        </Form.Control>
+                                    </Row>
+                                    <Row className="mb-2">
                                         <Form.Label>Image</Form.Label>
 
                                         <img
                                             src={`${cat.Image}`} width={70} height={200}
                                             alt="" />
-                                            <p>Télècharger une nouvelle image</p>
+                                        <p>Télècharger une nouvelle image</p>
                                         <FilePond
                                             type="file"
                                             files={files}
@@ -202,11 +182,7 @@ const Editcategorie = ({ cat }) => {
                                             labelIdle='<span class="filepond--label-action">
                                             Cliquer ici pour télécharger une nouvelle image
                                             </span>'
-
                                         />
-                                        
-
-
                                     </Row>
                                 </div>
                             </div>
@@ -217,7 +193,6 @@ const Editcategorie = ({ cat }) => {
                             Fermer
                         </Button>
                         <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Modifier</Button>
-
                     </Modal.Footer>
                 </Form>
             </Modal>

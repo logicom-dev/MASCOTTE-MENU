@@ -1,21 +1,15 @@
 var DataTypes = require("sequelize").DataTypes;
-
-
 var _article = require("./article");
 var _categorie = require("./categorie");
-
-
-
+var _employe = require("./employe");
 function initModels(sequelize) {
   var article = _article(sequelize, DataTypes);
-
   var categorie = _categorie(sequelize, DataTypes);
- 
-
+  var employe = _employe(sequelize, DataTypes);
   return {
     article,
     categorie,
-    
+    employe,
   };
 }
 module.exports = initModels;
