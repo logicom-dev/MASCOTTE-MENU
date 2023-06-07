@@ -18,9 +18,9 @@ const Insertcategorie = () => {
     const handleShow = () => setShow(true);
     const [nomcategorie, setNomcategorie] = useState("");
     const [codecategorie, setCodecategorie] = useState("");
-    const [setImage] = useState("");
+    const [Image, setImage] = useState("");
     const [files, setFiles] = useState("");
-    const [setValidated] = useState(false);
+    const [Validated, setValidated] = useState(false);
     const dispatch = useDispatch();
     const handleUpload = (event) => {
         if (!files[0].file) {
