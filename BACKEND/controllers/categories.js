@@ -45,7 +45,7 @@ const getCategories = async (req, res) => {
 const GetCategorieById = async (req, res) => {
     const CodeCat = req.params.CodeCat;
     try {
-        const cat = await db.sequelize.query(`SELECT DesCat, CodeCat, Image FROM categorie WHERE CodeCat=${CodeCat}`);
+        const cat = await db.sequelize.query(`SELECT DesCat, CodeCat, Image, visible_web FROM categorie WHERE CodeCat=${CodeCat}`);
         console.log(cat);
         res.status(200).json(cat[0]);
     } catch (error) {
