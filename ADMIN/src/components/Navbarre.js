@@ -28,7 +28,7 @@ const Menu = () => {
                         >
                             <Offcanvas.Header closeButton>
                                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                                    Mechmecha
+                                    La Mascotte
                                 </Offcanvas.Title>
                             </Offcanvas.Header>
                             <Offcanvas.Body>
