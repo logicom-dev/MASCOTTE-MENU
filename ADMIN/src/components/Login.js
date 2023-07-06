@@ -40,7 +40,7 @@ export const Login = () => {
         console.log(data)
         if (data.data.message === 'Login success') {
           auth.user = true
-          navigate(`/Menu?NomPrenom=${encodeURIComponent(NomPrenom)}`);
+          navigate(`/categories`);
         }
         else{
           if(data.data.status === 500){

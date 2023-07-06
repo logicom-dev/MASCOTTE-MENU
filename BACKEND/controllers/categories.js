@@ -1,7 +1,7 @@
 const db = require('../models')
 const getCategories = async (req, res) => {
     try {
-        const cat = await db.sequelize.query(`select CodeCat, DesCat, visible_web, Image from categorie`);
+        const cat = await db.sequelize.query(`select CodeCat, DesCat, visible_web, Image from categorie ORDER BY CodeCat`);
 
         res.status(200).json(cat[0]);
     } catch (error) {
@@ -10,7 +10,7 @@ const getCategories = async (req, res) => {
 }
 const getCategories2 = async (req, res) => {
     try {
-        const cat = await db.sequelize.query(`select CodeCat, DesCat, visible_web, Image from categorie where visible_web = "1"`);
+        const cat = await db.sequelize.query(`select CodeCat, DesCat, visible_web, Image from categorie where visible_web = "1" ORDER BY CodeCat `);
 
         res.status(200).json(cat[0]);
     } catch (error) {
