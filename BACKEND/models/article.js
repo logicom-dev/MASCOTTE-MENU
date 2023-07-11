@@ -1,4 +1,4 @@
-
+const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('article', {
     CodeArt: {
@@ -102,6 +102,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: 0
     },
+    prix2: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: 0
+    },
     tauxtva: {
       type: DataTypes.DOUBLE,
       allowNull: true,
@@ -166,6 +171,51 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DOUBLE,
       allowNull: true,
       defaultValue: 0
+    },
+    tauxpromo: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: 0
+    },
+    montantpromo: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: 0
+    },
+    codefournmp: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      defaultValue: ""
+    },
+    libefournmp: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      defaultValue: ""
+    },
+    imagepath: {
+      type: DataTypes.STRING(150),
+      allowNull: true
+    },
+    imagesize: {
+      type: DataTypes.MEDIUMINT,
+      allowNull: true
+    },
+    image: {
+      type: DataTypes.BLOB,
+      allowNull: true
+    },
+    couleur2: {
+      type: DataTypes.STRING(30),
+      allowNull: true
+    },
+    visible_web: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 1
+    },
+    image_web: {
+      type: DataTypes.STRING(150),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -180,7 +230,6 @@ module.exports = function(sequelize, DataTypes) {
           { name: "CodeArt" },
         ]
       },
-      
       {
         name: "CodeArt",
         using: "BTREE",

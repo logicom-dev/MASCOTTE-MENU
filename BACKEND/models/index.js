@@ -19,7 +19,8 @@ const db = {};
 db.sequelize= sequelize;
 db.categorie = model(sequelize).categorie;
 db.article=model(sequelize).article;
- 
+db.commande=model(sequelize).commande;
+db.employe=model(sequelize).employe;
 
 module.exports = db;
 

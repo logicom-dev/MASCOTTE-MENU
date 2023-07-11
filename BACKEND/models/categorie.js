@@ -23,6 +23,41 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(1),
       allowNull: true,
       defaultValue: "0"
+    },
+    coule: {
+      type: DataTypes.STRING(30),
+      allowNull: true,
+      defaultValue: "0"
+    },
+    caisse1: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      defaultValue: "1"
+    },
+    caisse2: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      defaultValue: "1"
+    },
+    caisse3: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      defaultValue: "1"
+    },
+    caisse4: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      defaultValue: "1"
+    },
+    caisse5: {
+      type: DataTypes.STRING(1),
+      allowNull: true,
+      defaultValue: "1"
+    },
+    visible_web: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: true,
+      defaultValue: 1
     }
   }, {
     sequelize,
