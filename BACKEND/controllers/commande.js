@@ -1,7 +1,7 @@
 const db = require('../models')
 
 const createCommande = async (req, res) => {
-    const com_data = req.body;
+    // const com_data = req.body;
     try {
 
         const cat = await db.sequelize.query(`INSERT INTO commande (com_data) VALUES ("{
