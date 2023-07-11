@@ -35,6 +35,7 @@ const Menu = () => {
                                 <Nav className="justify-content-end flex-grow-1 pe-3">
                                     <Nav.Link as={Link} to="/categories">Categories</Nav.Link>
                                     <Nav.Link as={Link} to="/articles">Articles</Nav.Link>
+                                    <Nav.Link as={Link} to="/commande">Commandes</Nav.Link>
                                 </Nav>
                                 <Button onClick={handleLogout} variant="outline-success">Logout</Button>
                             </Offcanvas.Body>

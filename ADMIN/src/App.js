@@ -6,6 +6,7 @@ import Listcategories from './components/categories/Listcategories';
 import Insertcategorie from './components/categories/Insertcategorie';
 import Editcategorie from './components/categories/Editcategorie';
 import Menu from "./components/Navbarre";
+import Commandes from "./components/commandes";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from "./components/auth";
 import { Login } from "./components/Login";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/article/edit/:id" element={<Editarticle />} />
         <Route path="/categories/add" element={<Insertcategorie />} />
         <Route path="/categories/edit/:id" element={<Editcategorie />} />
+        <Route path="/commande" element={<Commandes/>} />
       </Routes>
     </AuthProvider>
   );
