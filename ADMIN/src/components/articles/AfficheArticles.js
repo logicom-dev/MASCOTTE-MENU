@@ -11,14 +11,25 @@ import { fetchArticleById } from '../../services/ArticleService';
 const AfficheArticles = () => {
     const [article, setArticle] = useState([]);
     const [editValue, setEditValue] = useState(null);
+    const [getpermission, setGetpermission] = useState(true);
+
+    const handlerFeedback = () => {
+        setGetpermission(false)
+    }
+
+
     const handleEdit = (value) => {
+      
+        if(getpermission){
         fetchArticleById(value)
             .then((res) => {
                 setArticle(res.data);
                 setEditValue(value);
-            });
-    };
-    console.log(article);
+            })
+        }
+    }
+
+
     const dispatch = useDispatch();
     const { categories } = useSelector((state) => state.storecategories);
     const { articles, isLoading, error } = useSelector((state) => state.storearticles);
@@ -98,8 +109,7 @@ const AfficheArticles = () => {
                             onClick={(e) => handleEdit(value)}
                             style={{ cursor: 'pointer' }}
                         >
-                            <EditIcon color='primary' />
-                            {editValue && <Editarticle art={article[0]} />}
+                            <Editarticle handlerFeedback={handlerFeedback} art={article[0]} />
                         </span>
                         <span
                             onClick={(e) => handleDelete(value)}

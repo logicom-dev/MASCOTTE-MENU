@@ -13,6 +13,8 @@ import Container from '@mui/material/Container';
 import axios from 'axios';
 import { useAuth } from './auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center"
@@ -28,7 +30,6 @@ function Copyright(props) {
 }
 const theme = createTheme();
 export const Login = () => {
-  //const [user, setUser] = useState('');
   const auth = useAuth();
   const [NomPrenom, setNomPrenom] = useState('');
   const [MotPasse, setMotPasse] = useState('');
@@ -40,7 +41,8 @@ export const Login = () => {
         console.log(data)
         if (data.data.message === 'Login success') {
           auth.user = true
-          navigate(`/categories`);
+          navigate('/commande');
+          localStorage.setItem('user', true);
         }
         else{
           if(data.data.status === 500){
@@ -110,3 +112,6 @@ export const Login = () => {
     </div>
   )
 }
+
+
+//http://localhost:3000/api/login

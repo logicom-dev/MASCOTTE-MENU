@@ -119,7 +119,7 @@ export default function Modal(props) {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="name">Numéro de chambre:</label>
+                    <label htmlFor="name">Numéro de table:</label>
                     <input
                       type="text"
                       id="numero"
@@ -132,31 +132,7 @@ export default function Modal(props) {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="name">Numéro de téléphone:</label>
-                    <input
-                      type="text"
-                      id="numero"
-                      className="form-control"
-                      value={numtel}
-                      onChange={handleNumtelChange}
-                      inputMode="numeric"
-                      pattern="\d*"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                      type="email"
-                      id="email"
-                      className="form-control"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="address">Notes:</label>
+                    <label htmlFor="address">Remarque:</label>
                     <textarea
                       id="address"
                       className="form-control"
@@ -166,11 +142,11 @@ export default function Modal(props) {
                   </div>
                   <div className="form-group">
                     {loading ? (
-                      <button style={buttonStyle} disabled>
-                        Attendez un peu...
+                      <button  disabled>
+                        Veuillez patienter...
                       </button>
                     ) : (
-                      <button type="submit">Confirmer</button>
+                      <button className="btn-primary" style={{width: "100%" ,margin : "0" , border : "0"}} type="submit" >Confirmer</button>
                     )}
                   </div>
                 </form>

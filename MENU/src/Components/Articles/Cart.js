@@ -14,7 +14,7 @@ const Cart = () => {
   const buttonBgColor = process.env.REACT_APP_BTN_COLOR;
   const buttonStyle = {
     backgroundColor: buttonBgColor,
-    color: '#fff',
+    color: ' #e4ce4fee',
     width: '10.5rem',
     borderRadius: '10px',
     height: '40px',
@@ -134,7 +134,7 @@ const Cart = () => {
                   </svg>
                   <span>Ajouter autres articles</span>
                 </Link>
-                <button style={buttonStyle} onClick={() => getData(cart.cartTotalAmount, cart.cartItems)}>
+                <button className="btn-primary" style={{borderRadius:"10px"}} onClick={() => getData(cart.cartTotalAmount, cart.cartItems)} >
                   commander
                 </button>
               </div>

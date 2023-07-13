@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState , useEffect } from 'react';
 import MUIDataTable from "mui-datatables";
 import ReactLoading from 'react-loading';
 import { useDispatch, useSelector } from "react-redux";
@@ -7,19 +7,29 @@ import Insertcategorie from "./Insertcategorie";
 import { fetchCategorieById } from '../../services/CategorieService';
 import Editcategorie from "./Editcategorie";
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
-import EditIcon from '@mui/icons-material/Edit';
+import { getCategories } from '../../features/categorieSlice'
+
 const AfficheCategories = () => {
     const [categorie, setcategorie] = useState([]);
-    const [editValue, setEditValue] = useState(null);
-    const handleEdit = (value) => {
-        fetchCategorieById(value)
-        .then((res) => {
-            setcategorie(res.data);
-            setEditValue(value);
-        });
-    };
-    console.log(categorie[0]);
+    const [getpermission, setGetpermission] = useState(true);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCategories());
+      }, [dispatch]);
+
+    const handlerFeedback = () => {
+        setGetpermission(false)
+    }
+
+    const handleEdit = (value) => {
+        if(getpermission){
+            fetchCategorieById(value)
+            .then((res) => {
+                setcategorie(res.data);
+            })
+        }
+    };
     const { categories, isLoading, error } = useSelector((state) => state.storecategories);
     const tableRef = useRef(null);
     const handleDelete = (id) => {
@@ -46,10 +56,8 @@ const AfficheCategories = () => {
             label: "Visibilité",
             name: "visible_web",
             options: {
-                customBodyRender: (value) => {
-                  return value === 1 ? "Visible" : "Non visible";
-                }
-              }
+                filter: false,
+            }
            
         },
 
@@ -71,25 +79,26 @@ const AfficheCategories = () => {
             options: {
                 customBodyRender: (value, tableMeta) => (
                     <div>
-                        <span
-                            onClick={(e) => handleEdit(value)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <EditIcon color='primary' />
-                            {editValue && <Editcategorie cat={categorie[0]} />}
-                        </span>
-                        <span
-                            onClick={(e) => handleDelete(value)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <DeleteForeverRoundedIcon color='error' />
-                        </span>
-                    </div>
+                    <span
+                        onClick={(e) => handleEdit(value)}
+                        style={{ cursor: 'pointer' }}
+                    >                   
+                    <Editcategorie handlerFeedback={handlerFeedback} cat={categorie[0]} />
+
+                    </span>
+                    <span
+                        onClick={(e) => handleDelete(value)}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <DeleteForeverRoundedIcon color='error' />
+                    </span>
+                </div>
                 ),
                 filter: false
             }
         }
     ];
+    console.log("categorie[0]" , categorie[0])
     const renderCategories = () => {
         if (isLoading) return <center><ReactLoading type='spokes' color="red"
             height={'1%'} width={'1%'} /></center>

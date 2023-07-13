@@ -1,25 +1,28 @@
-import React from 'react'
+import React , {useState} from 'react'
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
-import { useNavigate, useLocation, useEffect } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 const Menu = () => {
-    
+    const user = localStorage.getItem('user');
+    console.log("useruser" , user)
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const NomPrenom = searchParams.get('NomPrenom');
     const navigate = useNavigate();
     const handleLogout = (event) => {
         event.preventDefault();
+        localStorage.setItem('user', false);
         navigate('/');
     }
+  
     return (
         <>
             {['sm'].map((expand) => (
                 <Navbar key={expand} bg="light" expand={expand} className="mb-3">
                     <Container fluid>
-                        <Navbar.Brand href="/">Bonjour La Mascotte Admin</Navbar.Brand>
+                        <Navbar.Brand href="/">Naher El-Founoun Admin</Navbar.Brand>
                         <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
                         <Navbar.Offcanvas
                             id={`offcanvasNavbar-expand-${expand}`}
@@ -28,7 +31,7 @@ const Menu = () => {
                         >
                             <Offcanvas.Header closeButton>
                                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                                    La Mascotte
+                                    Mechmecha
                                 </Offcanvas.Title>
                             </Offcanvas.Header>
                             <Offcanvas.Body>

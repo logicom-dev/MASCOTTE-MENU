@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Menu from "../Navbarre";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {
   Table,
   TableHead,
@@ -51,27 +52,27 @@ export default function Commandes() {
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell>Email</TableCell>
+           
             <TableCell>Nom</TableCell>
-            <TableCell>Numéro de chambre</TableCell>
-            <TableCell>Numéro de téléphone</TableCell>
-            <TableCell>Note</TableCell>
+            <TableCell>Numéro de table</TableCell>
+            <TableCell>Remarque</TableCell>
             <TableCell>Prix TTC</TableCell>
+            <TableCell>Détails</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
           {commandes.map((commande) => (
             <TableRow
               key={commande.id_cmd}
-              onClick={() => handleRowClick(commande.com_data)}
             >
               <TableCell>{commande.id_cmd}</TableCell>
-              <TableCell>{commande.com_data.email}</TableCell>
+              
               <TableCell>{commande.com_data.nom}</TableCell>
               <TableCell>{commande.com_data.numch}</TableCell>
-              <TableCell>{commande.com_data.numtel}</TableCell>
               <TableCell>{commande.com_data.note}</TableCell>
               <TableCell>{commande.com_data.prixttc}</TableCell>
+              <TableCell onClick={() => handleRowClick(commande.com_data)}><RemoveRedEyeIcon color="secondary"/> </TableCell>
             </TableRow>
           ))}
         </TableBody>

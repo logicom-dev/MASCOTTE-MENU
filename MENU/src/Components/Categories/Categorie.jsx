@@ -9,13 +9,7 @@ import Menu from './Menu';
 
 import logo from "./MascotteLogo.png";
 //import SearchBarSection from '../SearchBarSection';
-
-
-
-
 const Categorie = () => {
-
-
     const [articles, setArticles] = useState([]);
     useEffect(() => {
     GetListArticles();
