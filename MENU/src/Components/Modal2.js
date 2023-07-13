@@ -53,7 +53,7 @@ export default function Modal(props) {
     // buildFormData(formData, data);
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/postCommande",
+        "https://mascotte-api.onrender.com/api/postCommande",
         data
       );
       if (response.status === 200) {
