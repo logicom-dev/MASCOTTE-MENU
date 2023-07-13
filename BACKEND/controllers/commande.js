@@ -18,13 +18,22 @@ const createCommande = async (req, res) => {
 };
 
 const getCommande = async (req, res) => {
-    try {
-        const commande = await db.sequelize.query(`SELECT * FROM commande`);
-        res.status(200).json(commande);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-}
+  try {
+    const commandes = await db.sequelize.query(`SELECT * FROM commande`);
+    
+    const modifiedCommandes = commandes[0].map((commande) => {
+      const modifiedCommande = JSON.parse(commande.com_data.replace(/\\/g, ''));
+      commande.com_data = modifiedCommande;
+      return commande;
+    });
+    
+    res.status(200).json(modifiedCommandes);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+
 
 
 module.exports = { createCommande , getCommande };

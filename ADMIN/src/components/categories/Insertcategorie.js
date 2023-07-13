@@ -1,123 +1,109 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-import { UploadFirebase } from '../../Utils/UploadFirebase';
-import { useDispatch } from "react-redux";
-import { buildFormData } from "../../Utils/ConvertFormData";
-import { FilePond, registerPlugin } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
-import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
-import { createCategorie, getCategories } from '../../features/categorieSlice';
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-const Insertcategorie = () => {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const [nomcategorie, setNomcategorie] = useState("");
-    const [codecategorie, setCodecategorie] = useState("");
-    const [Image, setImage] = useState("");
-    const [files, setFiles] = useState("");
-    const [Validated, setValidated] = useState(false);
-    const dispatch = useDispatch();
-    const handleUpload = (event) => {
-        if (!files[0].file) {
-            alert("Please upload an image first!");
-        }
-        console.log(files[0].file)
-        resultHandleUpload(files[0].file, event);
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Menu from "../Navbarre";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Typography,
+} from "@mui/material";
 
+export default function Commandes() {
+  const [commandes, setCommandes] = useState([]);
+  const [selectedCommande, setSelectedCommande] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/postCommande");
+        setCommandes(response.data);
+        console.log("qqqqq", response.data);
+      } catch (error) {
+        console.error(error);
+      }
     };
-    const resultHandleUpload = async (image, event) => {
-        try {
-            await UploadFirebase(image).then((url) => {
-                console.log(url);
 
-                handleSubmit(event, url);
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    const handleSubmit = async (event, url) => {
-        event.preventDefault();
-        setImage(url);
-        const categorie = {
-            nomcategorie: nomcategorie,
-            codecategorie: codecategorie,
-            Image: url
-        }
-        const formData = new FormData();
-        buildFormData(formData, categorie);
-        console.log(categorie);
-        await dispatch(createCategorie(formData))
-            .then(res => {
-                console.log("Insert OK", res);
-                setShow(false);
-                setCodecategorie("");
-                setNomcategorie("");
-                setImage("");
-                setFiles("");
-                setValidated(false);
-            })
-        await dispatch(getCategories())
-    };
-    return (
-        <>
-            <Button variant="success" style={{ 'margin': 10, 'left': 10 }}
-                onClick={handleShow}>
-                + Nouveau
-            </Button>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title> <h1 align="center">Ajout Categorie</h1></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group className='mb-3' >
-                            <Form.Label >Référence *</Form.Label>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="code categorie"
-                                value={codecategorie}
-                                onChange={(e) => setCodecategorie(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className='mb-3'>
-                            <Form.Label>Désignation *</Form.Label>
-                            <Form.Control
-                                required
-                                type="text"
-                                placeholder="nom categorie"
-                                value={nomcategorie}
-                                onChange={(e) => setNomcategorie(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <h4>Sélectionner une image</h4>
-                            <FilePond
-                                type="file"
-                                files={files}
-                                allowMultiple={false}
-                                onupdatefiles={setFiles}
-                                labelIdle='<span class="filepond--label-action">Browse
-One</span>'
-                            />
-                        </Form.Group>
+    fetchData();
+  }, []);
 
-                    </Form>
-                </Modal.Body >
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Fermer
-                    </Button>
-                    <Button variant="primary" type="submit" onClick={(event) => handleUpload(event)}>Ajouter</Button>
-                </Modal.Footer>
-            </Modal >
-        </>
-    )
+  const handleRowClick = (comData) => {
+    setSelectedCommande(comData);
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setSelectedCommande(null);
+    setShowPopup(false);
+  };
+
+  return (
+    <>
+      <Menu />
+
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>ID</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Nom</TableCell>
+            <TableCell>Numéro de chambre</TableCell>
+            <TableCell>Numéro de téléphone</TableCell>
+            <TableCell>Note</TableCell>
+            <TableCell>Prix TTC</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {commandes.map((commande) => (
+            <TableRow
+              key={commande.id_cmd}
+              onClick={() => handleRowClick(commande.com_data)}
+            >
+              <TableCell>{commande.id_cmd}</TableCell>
+              <TableCell>{commande.com_data.email}</TableCell>
+              <TableCell>{commande.com_data.nom}</TableCell>
+              <TableCell>{commande.com_data.numch}</TableCell>
+              <TableCell>{commande.com_data.numtel}</TableCell>
+              <TableCell>{commande.com_data.note}</TableCell>
+              <TableCell>{commande.com_data.prixttc}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      <Dialog
+        open={showPopup}
+        onClose={closePopup}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-body-desc"
+      >
+        <DialogTitle id="modal-title">
+          Commande Details
+        </DialogTitle>
+        <DialogContent>
+          {selectedCommande && (
+            <>
+              <Typography variant="subtitle1">
+                <strong>Email:</strong> {selectedCommande.email}
+              </Typography>
+              <Typography variant="subtitle1">
+                <strong>Nom:</strong> {selectedCommande.nom}
+              </Typography>
+              {/* Add more fields as needed */}
+            </>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closePopup}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
 }
-export default Insertcategorie

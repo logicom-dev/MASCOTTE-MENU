@@ -5,20 +5,17 @@ var _commande = require("./commande");
 var _employe = require("./employe");
 
 function initModels(sequelize) {
- 
-  var employe =  _employe(sequelize, DataTypes);
   var article = _article(sequelize, DataTypes);
   var categorie = _categorie(sequelize, DataTypes);
   var commande = _commande(sequelize, DataTypes);
-
- 
+  var employe = _employe(sequelize, DataTypes);
 
 
   return {
-    employe,
     article,
     categorie,
-    commande
+    commande,
+    employe,
   };
 }
 module.exports = initModels;
