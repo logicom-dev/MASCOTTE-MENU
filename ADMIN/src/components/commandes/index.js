@@ -24,7 +24,7 @@ export default function Commandes() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/postCommande");
+        const response = await axios.get("https://mascotte-api.onrender.com/api/postCommande");
         setCommandes(response.data);
       } catch (error) {
         console.error(error);

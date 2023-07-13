@@ -52,10 +52,8 @@ export default function Modal(props) {
     // const formData = new FormData();
     // buildFormData(formData, data);
     try {
-      const response = await axios.post(
-        "https://mascotte-api.onrender.com/api/postCommande",
-        data
-      );
+      const response = await axios.post("https://mascotte-api.onrender.com/api/postCommande", data );
+      // const response = await axios.post("http://localhost:3000/api/postCommande", data );
       if (response.status === 200) {
         dispatch(clearCart());
         setEditValue(true);

@@ -14,7 +14,6 @@ import axios from 'axios';
 import { useAuth } from './auth';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center"
@@ -36,7 +35,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const handleLogin = (event) => {
     event.preventDefault();
-    axios.post('https://mascotte-api.onrender.com/api/login', { NomPrenom, MotPasse })
+    axios.post("https://mascotte-api.onrender.com/api/login", { NomPrenom, MotPasse })
       .then(data => {
         console.log(data)
         if (data.data.message === 'Login success') {
@@ -112,6 +111,3 @@ export const Login = () => {
     </div>
   )
 }
-
-
-//http://localhost:3000/api/login
