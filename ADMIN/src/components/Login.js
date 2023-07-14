@@ -35,7 +35,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const handleLogin = (event) => {
     event.preventDefault();
-    axios.post("https://mascotte-api.onrender.com/api/login", { NomPrenom, MotPasse })
+    axios.post(process.env.REACT_APP_API + "/login", { NomPrenom, MotPasse })
       .then(data => {
         console.log(data)
         if (data.data.message === 'Login success') {
