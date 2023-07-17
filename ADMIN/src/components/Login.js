@@ -37,7 +37,6 @@ export const Login = () => {
     event.preventDefault();
     axios.post(process.env.REACT_APP_API + "/login", { NomPrenom, MotPasse })
       .then(data => {
-        console.log(data)
         if (data.data.message === 'Login success') {
           auth.user = true
           navigate('/commande');

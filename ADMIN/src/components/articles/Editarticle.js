@@ -63,7 +63,6 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
     setVisible(art.visible_web);
   }, [art]);
 
-  console.log("art", art);
   /* // Dans le cas de Multer
     function isFile(obj) {
         return obj.constructor === File;
@@ -83,15 +82,12 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
   const handleUpload = (event) => {
     if (!files[0].file) {
       alert("Please upload an image first!");
-      console.log("Please upload an image first!");
     }
-    console.log(files[0].file);
     resultHandleUpload(files[0].file, event);
   };
   const resultHandleUpload = async (image, event) => {
     try {
       await UploadFirebase(image).then((url) => {
-        console.log(url);
         handleSubmit(event, url);
       });
     } catch (error) {
@@ -110,7 +106,6 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
       visible_web: visible,
       image_web: url,
     };
-    console.log(article.image_web);
     if (article.CodeArt === "") {
       article.CodeArt = art.CodeArt;
     }
@@ -130,14 +125,11 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
       article.prix1 = art.prix1;
     }
     if (article.image_web === undefined) {
-      console.log("the article image is undefined");
-      console.log(art.image_web);
+      
       setFiles(art.image_web);
       setImage_web(art.image_web);
       article.image_web = art.image_web;
     } else {
-      console.log("Vous avez changer l'image de votre article");
-      console.log(article.image_web);
       setFiles(article.image_web);
     }
     /*  if (isFile(article.imagepath)) {
@@ -148,12 +140,10 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
              console.log('It is a Blob, change it to a File')
              article.imagepath = blobToFile(files[0].file, files[0].file.name);
          } */
-    console.log(article.image_web);
     const formData = new FormData();
     buildFormData(formData, article);
     await dispatch(updateArticle(formData))
       .then((res) => {
-        console.log("edit OK", res);
         setShow(false);
         setLibArt("");
         setprix1("");

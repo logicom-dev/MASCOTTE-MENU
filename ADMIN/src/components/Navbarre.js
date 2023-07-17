@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 const Menu = () => {
     const user = localStorage.getItem('user');
-    console.log("useruser" , user)
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const NomPrenom = searchParams.get('NomPrenom');

@@ -43,14 +43,11 @@ const Insertarticle = () => {
         if (!files[0].file) {
             alert("Please upload an image first!");
         }
-        console.log(files[0].file)
         resultHandleUpload(files[0].file, event);
     };
     const resultHandleUpload = async (image, event) => {
         try {
             await UploadFirebase(image).then((url) => {
-                console.log(url);
-
                 handleSubmit(event, url);
             })
         } catch (error) {
@@ -100,10 +97,9 @@ const Insertarticle = () => {
         }
         const formData = new FormData();
         buildFormData(formData, article);
-        console.log(article)
         await dispatch(createArticle(formData))
             .then(res => {
-                console.log("Insert OK", res);
+
                 setShow(false);
                 setLibArt("");
                 setCodeArt("");

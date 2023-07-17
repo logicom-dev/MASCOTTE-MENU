@@ -62,16 +62,12 @@ const Editcategorie = ({ cat = {} , handlerFeedback}) => {
     const handleUpload = (event) => {
         if (!files[0].file) {
             alert("Please upload an image first!");
-            console.log("Please upload an image first!")
         }
-        console.log(files[0].file)
         resultHandleUpload(files[0].file, event);
     };
     const resultHandleUpload = async (image, event) => {
         try {
             await UploadFirebase(image).then((url) => {
-                console.log(url);
-
                 handleSubmit(event, url);
             })
         } catch (error) {
@@ -88,8 +84,6 @@ const Editcategorie = ({ cat = {} , handlerFeedback}) => {
             Image: url
         }
         if (categorie.Image === undefined) {
-            console.log("the image category is undefined")
-            console.log(cat.Image)
             setFiles(cat.Image)
             setImage(cat.Image)
             categorie.Image = cat.Image
@@ -104,8 +98,6 @@ const Editcategorie = ({ cat = {} , handlerFeedback}) => {
         //     categorie.DesCat = cat.DesCat
         // }
         else {
-            console.log("Vous avez changer l'image de votre categorie")
-            console.log(categorie.Image)
             setFiles(categorie.Image)
         }
         /* if (isFile(categorie.Image)) {
@@ -129,10 +121,8 @@ const Editcategorie = ({ cat = {} , handlerFeedback}) => {
                   } */
         const formData = new FormData();
         buildFormData(formData, categorie);
-        console.log(categorie)
         await dispatch(updateCategorie(formData))
             .then(res => {
-                console.log("edit OK", res);
                 setShow(false);
                 setDesCat("");
                 setImage("");

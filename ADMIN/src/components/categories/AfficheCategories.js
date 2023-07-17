@@ -98,7 +98,6 @@ const AfficheCategories = () => {
             }
         }
     ];
-    console.log("categorie[0]" , categorie[0])
     const renderCategories = () => {
         if (isLoading) return <center><ReactLoading type='spokes' color="red"
             height={'1%'} width={'1%'} /></center>

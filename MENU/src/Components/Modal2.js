@@ -20,7 +20,6 @@ export default function Modal(props) {
   };
   const navigate = useNavigate();
   const [showModal, setShowModal] = React.useState(true);
-  console.log(props.hide);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);

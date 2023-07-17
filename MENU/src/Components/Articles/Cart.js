@@ -31,7 +31,6 @@ const Cart = () => {
   const getData = (prix1, cartItem) => {
     let tempData = [prix1, cartItem];
     setTempdata(item => [1, ...tempData]);
-    console.warn(tempData);
     return setModel(true);
   }
   const handleAddToCart = (product) => {

@@ -11,7 +11,6 @@ const Menu = ({ items }) => {
   const getData = (prix1, LibArt, Descrip, image_web, CodeArt ) => {
     let tempData = [prix1, LibArt, Descrip, image_web, CodeArt ];
     setTempdata(item => [1, ...tempData]);
-    console.warn(tempData);
     return setModel(true);
   }
 

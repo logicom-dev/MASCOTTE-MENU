@@ -26,15 +26,12 @@ const Insertcategorie = () => {
         if (!files[0].file) {
             alert("Please upload an image first!");
         }
-        console.log(files[0].file)
         resultHandleUpload(files[0].file, event);
 
     };
     const resultHandleUpload = async (image, event) => {
         try {
             await UploadFirebase(image).then((url) => {
-                console.log(url);
-
                 handleSubmit(event, url);
             })
         } catch (error) {
@@ -51,10 +48,8 @@ const Insertcategorie = () => {
         }
         const formData = new FormData();
         buildFormData(formData, categorie);
-        console.log(categorie);
         await dispatch(createCategorie(formData))
             .then(res => {
-                console.log("Insert OK", res);
                 setShow(false);
                 setCodecategorie("");
                 setNomcategorie("");
