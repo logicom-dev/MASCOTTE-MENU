@@ -58,7 +58,8 @@ export default function Footer() {
       
       <div className='text-center p-3' style={{ backgroundColor: 'rgb(13 13 13 / 87%)', padding:'10' }}>
         © 2023 Copyright   
-        <a className='text-yellow' href='https://logicom-dev.com/'>  LOGICOM
+        <a className='text-yellow' href='https://21c-digital.com/'>
+          21C'DIGITAL
         </a>
       </div>
     </MDBFooter>

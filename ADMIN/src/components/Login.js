@@ -19,8 +19,8 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center"
       {...props}>
       {'Copyright © '}
-      <Link color="inherit" href='https://logicom-dev.com/'>
-        LOGICOM
+      <Link color="inherit" href='https://21c-digital.com/'>
+        21C'DIGITAL
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -43,11 +43,11 @@ export const Login = () => {
           navigate('/commande');
           localStorage.setItem('user', true);
         }
-        else{
-          if(data.data.status === 500){
+        else {
+          if (data.data.status === 500) {
             alert('Utilisateur inexistant')
           }
-          else{
+          else {
             alert('Mot de passe incorrect')
           }
         }
