@@ -16,7 +16,6 @@ const SearchBarSection = () => {
   const getData = (prix1, LibArt, Descrip, image_web, CodeArt ) => {
     let tempData = [prix1, LibArt, Descrip, image_web, CodeArt ];
     setTempdata(item => [1, ...tempData]);
-    console.warn(tempData);
     return setModel(true);
   }
  
@@ -29,7 +28,6 @@ const SearchBarSection = () => {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
     GetListArticles();
-    console.log(articles)
   }, [articles]);
 
   const GetListArticles = async () => {
