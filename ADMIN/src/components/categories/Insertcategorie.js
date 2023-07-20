@@ -26,6 +26,9 @@ const Insertcategorie = () => {
         if (!files[0].file) {
             alert("Please upload an image first!");
         }
+        if (files[0].file.name && files[0].file.name.length > 50) {
+            alert("Le nom de l'image doit être court (inférieur à 50 caractères).");
+        }
         resultHandleUpload(files[0].file, event);
 
     };

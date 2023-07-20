@@ -28,8 +28,8 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
-    setTimeout(() => window.location.reload() , 7000);
-    
+    setTimeout(() => window.location.reload(), 7000);
+
   };
   const handleShow = () => {
     setShow(true);
@@ -83,6 +83,9 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
     if (!files[0].file) {
       alert("Please upload an image first!");
     }
+    if (files[0].file.name && files[0].file.name.length > 50) {
+      alert("Le nom de l'image doit être court (inférieur à 50 caractères).");
+    }
     resultHandleUpload(files[0].file, event);
   };
   const resultHandleUpload = async (image, event) => {
@@ -125,7 +128,7 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
       article.prix1 = art.prix1;
     }
     if (article.image_web === undefined) {
-      
+
       setFiles(art.image_web);
       setImage_web(art.image_web);
       article.image_web = art.image_web;
@@ -210,15 +213,15 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
                       </Form.Group>
                     </Row>
                     <Row className="mb-2">
-                    <Form.Group as={Col} md="12">
-                      <Form.Label>Désignation :</Form.Label>
-                      <Form.Control
-                        required
-                        type="text"
-                        placeholder="Modifier le nom de l'article"
-                        value={LibArt}
-                        onChange={(e) => setLibArt(e.target.value)}
-                      />
+                      <Form.Group as={Col} md="12">
+                        <Form.Label>Désignation :</Form.Label>
+                        <Form.Control
+                          required
+                          type="text"
+                          placeholder="Modifier le nom de l'article"
+                          value={LibArt}
+                          onChange={(e) => setLibArt(e.target.value)}
+                        />
                       </Form.Group>
                     </Row>
                     <Row className="mb-2">
@@ -253,13 +256,13 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
                             >
                               {categories
                                 ? categories.map((cat) => (
-                                    <MenuItem
-                                      key={cat.CodeCat}
-                                      value={cat.CodeCat}
-                                    >
-                                      {cat.DesCat}
-                                    </MenuItem>
-                                  ))
+                                  <MenuItem
+                                    key={cat.CodeCat}
+                                    value={cat.CodeCat}
+                                  >
+                                    {cat.DesCat}
+                                  </MenuItem>
+                                ))
                                 : null}
                             </TextField>
                           </FormControl>
@@ -277,31 +280,31 @@ const Editarticle = ({ art = {}, handlerFeedback }) => {
                     </Row>
 
                     <Row className="mb-2">
-                    <Form.Label>Description :</Form.Label>
-                    <Form.Group as={Col} md="12">
+                      <Form.Label>Description :</Form.Label>
+                      <Form.Group as={Col} md="12">
 
-                    <Row className="mb-2">
-                      {/* <Form.Control
+                        <Row className="mb-2">
+                          {/* <Form.Control
                         type="text"
                         required
                         placeholder="Modifier la description de l'article"
                         value={Descrip}
                         onChange={(e) => setDescrip(e.target.value)}
                       /> */}
-                      <TextField
-                        type="text"
-                        required
-                        placeholder="Modifier la description de l'article"
-                        value={Descrip}
-                        onChange={(e) => setDescrip(e.target.value)}
-                        multiline
-                        rows={4}
-                        maxRows={4}
-                      />
+                          <TextField
+                            type="text"
+                            required
+                            placeholder="Modifier la description de l'article"
+                            value={Descrip}
+                            onChange={(e) => setDescrip(e.target.value)}
+                            multiline
+                            rows={4}
+                            maxRows={4}
+                          />
+                        </Row>
+                      </Form.Group>
                     </Row>
-                    </Form.Group>
-                    </Row>
-                   
+
 
                     <Row className="mb-3">
                       <Form.Group as={Col} md="6">
