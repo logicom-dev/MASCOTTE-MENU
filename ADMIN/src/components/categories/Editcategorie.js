@@ -20,8 +20,9 @@ const Editcategorie = ({ cat = {} , handlerFeedback}) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => {
-        setShow(false)
-        window.location.reload();
+        setShow(false);
+        setTimeout(() => window.location.reload() , 7000);
+        
     };
     const handleShow = () => {
         setShow(true)

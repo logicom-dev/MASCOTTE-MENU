@@ -8,7 +8,6 @@ import Divider from '@mui/joy/Divider';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Modal from './Modal';
 import MultiRangeSlider from "multi-range-slider-react";
-import image from './article2.jpg'
 
 const SearchBarSection = () => {
   const [model, setModel] = useState(false);
