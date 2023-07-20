@@ -10,7 +10,8 @@ const getArticles = async (req, res) => {
 }
 const getArticles2 = async (req, res) => {
     try {
-        const art = await db.sequelize.query(`select CodeArt, LibArt, Descrip, CodeCat, prix1, image_web, visible_web from article WHERE  visible_web = "1"`);
+        const art = await db.sequelize.query(`select CodeArt, LibArt, Descrip, CodeCat, prix1, image_web, visible_web from article WHERE  visible_web = "1" AND article.CodeCat IN 
+        (SELECT CodeCat FROM categorie WHERE categorie.CodeCat = article.CodeCat AND categorie.visible_web ="1")`);
 
         res.status(200).json(art[0]);
     } catch (error) {
