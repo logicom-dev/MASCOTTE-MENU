@@ -97,12 +97,7 @@ export default function Modal(props) {
               <div className="modal-body">
                 <Divider inset="context" />
 
-                <Typography
-                  level="body3"
-                  sx={{ fontWeight: "md", color: "text.secondary" }}
-                >
-                  Vous allez payer un montant de : {props.prix1} Dt
-                </Typography>
+                
                 <form onSubmit={submit}>
                   <div className="form-group">
                     <label htmlFor="name">Nom et Prénom:</label>
@@ -137,6 +132,12 @@ export default function Modal(props) {
                       onChange={(e) => setNote(e.target.value)}
                     />
                   </div>
+                  <Typography
+                  level="body3"
+                  sx={{ fontWeight: "md", color: "text.secondary" }}
+                >
+                  Montant Total : {props.prix1} Dt
+                </Typography>
                   <div className="form-group">
                     {loading ? (
                       <button  disabled>
