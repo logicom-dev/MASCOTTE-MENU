@@ -8,7 +8,7 @@ import Divider from '@mui/joy/Divider';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Modal from './Modal';
 import MultiRangeSlider from "multi-range-slider-react";
-
+import { WebP } from "react-image-webp";
 const SearchBarSection = () => {
   const [model, setModel] = useState(false);
   const [tempData, setTempdata] = useState([]);
@@ -130,9 +130,10 @@ const SearchBarSection = () => {
 
                 <AspectRatio ratio="1" sx={{ width: 100, marginLeft: 1, marginTop: 1, marginBottom:1}}>
                 <picture>
-                    <source srcset={product.image_web} media="(max-width: 767px)" />
+                    {/* <source srcset={product.image_web} media="(max-width: 767px)" />
                     <source srcset={product.image_web} media="(min-width: 768px) and (max-width: 1023px)" />
-                    <source srcset={product.image_web} media="(min-width: 1024px)" />
+                    <source srcset={product.image_web} media="(min-width: 1024px)" /> */}
+                     <source srcSet={`${product.image_web}.webp`} type="image/webp" />
                     <img
                       border-radius='10px'
                       radius={10}
