@@ -1,7 +1,6 @@
 import axios from 'axios'
 export default axios.create({
- //   baseURL: process.env.REACT_APP_API
-      baseURL:  "https://mascotte-menu.onrender.com/api/"
+   baseURL: process.env.REACT_APP_API
 })
 
 // export default axios.create({
