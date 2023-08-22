@@ -61,7 +61,7 @@ const Categorie = () => {
         setMenuItems(articles);
         return;
       }
-      const newItems = articles.filter((item) => item.CodeCat === category);
+      const newItems = articles.filter((item) => item.CodeCat === Number(category));
       setMenuItems(newItems);
     };
 
