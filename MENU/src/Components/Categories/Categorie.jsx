@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { CategorieService } from '../../Services/Categories-service';
 import { ArticleService } from '../../Services/Article-Service';
+import { ToastContainer, toast } from 'react-toastify';
 
 import Categories from './Categories';
 
@@ -83,7 +84,7 @@ const Categorie = () => {
           filterItems={filterItems}
         />
         <Menu items={menuItems} />
-
+        <ToastContainer />
         
  
        
