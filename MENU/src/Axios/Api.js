@@ -4,5 +4,5 @@ export default axios.create({
 })
 
 // export default axios.create({
-//     baseURL1: "http://localhost:3000/api/"
+//     baseURL: "http://localhost:3000/api/"
 // })
