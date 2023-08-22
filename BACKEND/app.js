@@ -16,5 +16,6 @@ app.use('/api/postCommande', postCommande);
 //static images folder
 app.use('/public', express.static('public'));
 // start server
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 3000;
+// const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 3000;
+const port = process.env.PORT || 5000
 app.listen(port, () => console.log('Server listening on port ' + port));
